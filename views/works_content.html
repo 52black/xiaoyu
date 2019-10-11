@@ -156,17 +156,9 @@
 						<%}else{%>
 						<span class="icon-span" id="keep-works-btn"><i class="icon iconfont icon-favorfill"></i> <span>收藏</span></span>
 						<%}%>
-						<span class="fg-line"></span>
-						<span class="fx-span-bar">分享到:
-							<a href="" class="i-wx"><i class="icon iconfont icon-weixin"></i><div id="qrcode" class="weixin-bar"></div></a>
-						</span>
 					<% }else{ %>
 						<span class="icon-span" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-appreciate_fill_light"></i> <span><%- works.zan %></span></span>
 						<span class="icon-span" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-favorfill"></i> 收藏</span>
-						<span class="fg-line"></span>
-						<span class="fx-span-bar">分享到:
-							<a href="" class="i-wx"><i class="icon iconfont icon-weixin"></i><div id="qrcode" class="weixin-bar"></div></a>
-						</span>
 					<% } %>
 				</div>
 			</div>
@@ -380,8 +372,6 @@
     <%include pub/script.html%>
 	<script type="text/javascript" src="/plugin/qrcode.js"></script>
     <script type="text/javascript">
-    	let _href = window.location.href;
-		new QRCode(document.getElementById("qrcode"), _href);
     	var worksplayId = $('#s_worksid').val();
     	$(function(){
     		let user_page_id = $('#userid-page').val();
@@ -411,6 +401,5 @@
     	}
     </script>
     <script type="text/javascript" src="/scratches/player/compatibility.js"></script>
-    
-  </body>
+    </body>
 </html>
