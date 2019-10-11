@@ -1,0 +1,52 @@
+<%include pub/admin_head.html%>
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div class="page-container">
+            <%include pub/admin_nav.html%>
+            <!-- Page Content -->
+            <div class="page-content">
+            	<%include pub/admin_top.html%>
+                <div class="page-inner">
+                	<div class="page-title">
+                        <h3 class="breadcrumb-header">用户举报</h3>
+                    </div>
+                    <div id="main-wrapper">
+                        <div class="col-md-12">
+                            <table class="table" style="margin-top: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>被举报评论ID</th>
+                                        <th>评论详情</th>
+                                        <th>被举报原因</th>
+                                        <th>举报人ID</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%if(tips){%>
+                                        <%for(let i=0; i< tips.length;i++){%>
+                                        <tr>
+                                            <th scope="row"><%= i+1 %></th>
+                                            <td><%= tips[i].toid._id %></td>
+                                            <td><%= tips[i].toid.content %></td>
+                                            <td><%= tips[i].content %></td>
+                                            <td><%= tips[i].fromid %></td>
+                                            <% if(tips[i].status == 0){ %>
+                                            <td><button type="button" class="btn btn-danger delete-tip-com" tipid="<%- tips[i]._id %>" cid="<%= tips[i].toid._id %>" comid="<%= tips[i].comid %>" data-qf="<%- qf%>" data-diff="<%= tips[i].diff %>">删除评论</button></td>
+                                            <%}else{%>
+                                            <td>已处理</td>
+                                            <%}%>
+                                        </tr>
+                                    <%}}%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <%include pub/foot.html%>
+    </body>
+</html>

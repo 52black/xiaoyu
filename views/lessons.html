@@ -1,0 +1,32 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <div class="xu-index-head bg2" style="overflow: visible">
+    	<div class="head-bg4"></div>
+    	<div class="container">
+	    	<%include pub/nav.html%>
+	    </div>
+	</div>
+    <div class="xu-main-panel">
+    	<div class="container">
+    		<div class="row">
+            <%if(lessonlist){%>
+            <%for(let i=0; i < lessonlist.length; i++){%>
+            <div class="lessons-list-div">
+                <a href="/lessons/content/<%- lessonlist[i]._id%>">
+                    <div class="lessons-cover-img">
+                        <img src="/img/videocover/<%- lessonlist[i].covers %>">
+                    </div>
+                    <p class="lessons-list-title"><%- lessonlist[i].title %></p>
+                    <p class="lessons-list-views"><%- lessonlist[i].looks %>次播放</p>
+                </a>
+            </div>
+            <%}%>
+            <%}%>
+    		</div>
+    	</div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+  </body>
+</html>

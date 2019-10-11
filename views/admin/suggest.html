@@ -1,0 +1,46 @@
+<%include pub/admin_head.html%>
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div class="page-container">
+            <%include pub/admin_nav.html%>
+            <!-- Page Content -->
+            <div class="page-content">
+            	<%include pub/admin_top.html%>
+                <div class="page-inner">
+                	<div class="page-title">
+                        <h3 class="breadcrumb-header">意见反馈</h3>
+                    </div>
+                    <div id="main-wrapper">
+                        <div class="col-md-12">
+                            <table class="table" style="margin-top: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>用户ID</th>
+                                        <th>用户昵称</th>
+                                        <th>反馈内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%if(suggest){%>
+                                        <%for(let i=0; i< suggest.length;i++){%>
+                                        <tr>
+                                            <th scope="row"><%= i+1 %></th>
+                                            <td><%= suggest[i].user._id %></td>
+                                            <td><%= suggest[i].user.nickname %></td>
+                                            <td><%= suggest[i].content %></td>
+                                        </tr>
+                                    <%}}%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Javascripts -->
+        <%include pub/foot.html%>
+    </body>
+</html>

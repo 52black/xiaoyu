@@ -1,0 +1,34 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <%include pub/userhead.html%>
+	<div class="xu-mian-panel">
+        <div class="container">
+			<div class="tab-content user-tab-content">
+                <%if(ufollist.length > 0){%>
+                    <ul class="xu-follow-bar row">
+                        <% for(let i=0; i < ufollist.length; i++){%>
+                        <li>
+                        	<div class="userfoll row">
+	                        	<a href="/users/userindex/<%- ufollist[i].toid._id%>" class="ot-item-left">
+	                        		<img src="<%- ufollist[i].toid.headimg%>">
+	                        	</a>
+	                        	<div class="ot-item-content">
+	                        		<div class="ot-user-name"><a href="/users/userindex/<%- ufollist[i].toid._id%>"><%- ufollist[i].toid.nickname %></a></div>
+	                        		<a href="/users/userindex/<%- ufollist[i].toid._id%>" class="addfollow-btn">TA的主页</a>
+	                        	</div>
+                        	</div>
+                        </li>
+                        <%}%>
+                    </ul>
+                <%}else{%>
+                    <p class="note-nowroks"><i class="icon iconfont icon-discoverfill"></i> TA还没有关注者哦</p>
+                <%}%>
+			</div>
+        </div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+    <script type="text/javascript" src="/plugin/jqpaginator.min.js"></script>
+  </body>
+</html>

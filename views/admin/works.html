@@ -1,0 +1,41 @@
+<%include pub/admin_head.html%>
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div class="page-container">
+            <%include pub/admin_nav.html%>
+            <!-- Page Content -->
+            <div class="page-content">
+            	<%include pub/admin_top.html%>
+                <div class="page-inner">
+                	<div class="page-title">
+                        <h3 class="breadcrumb-header">作品管理</h3>
+                    </div>
+                    <div id="main-wrapper">
+                    	<div class="row">
+	                        <div class="col-md-4">
+	                            <div class="panel panel-white">
+	                                <div class="panel-body">
+	                                    <form>
+											<div class="form-group">
+												<label>请输入作品名称</label>
+												<input type="text" class="form-control" id="search-work-title" >
+											</div>
+											<button type="button" class="btn btn-primary" id="search-work-btn">确认</button>
+										</form>
+	                                </div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div class="row">
+                        	<div class="col-md-7" id="s-workinfo">
+                        		
+                            </div>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%include pub/foot.html%>
+    </body>
+</html>

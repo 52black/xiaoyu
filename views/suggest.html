@@ -1,0 +1,46 @@
+<%include pub/head.html%>
+</head>
+<style type="text/css">
+	#portamento_container {float: left;position: relative;}
+	#sidebar {float:none; position:absolute;}
+	#sidebar.fixed {position:fixed;} /* if the panel is sliding, it needs position:fixed */
+</style>
+  <body class="bodybg">
+    <div class="xu-index-head bg2" style="overflow: visible">
+    	<div class="head-bg4"></div>
+    	<div class="container">
+	    	<%include pub/nav.html%>
+	    </div>
+	</div>
+    <div class="xu-main-panel">
+    	<div class="container">
+    		<div class="us-panel row">
+	    		<div class="mw-left-bar" id="sidebar">
+	    			<ul id="about-us-ul">
+	    				<li class="active"><a href="/suggest">产品建议</a></li>
+        				<li><a href="/feedback">问题反馈</a></li>
+        			</ul>
+	    		</div>
+	    		<div class="mw-right-bar">
+	    			<div class="myjob-title border">
+	                    <h3 id="convention">产品建议</h3>
+	                </div>
+	                <div class="aboutus-bar">
+                    	<p>如果你对小幽有更好的建议，可以在下方给我们反馈：</p>
+                    	<textarea class="form-control" rows="4" id="sug-msg"></textarea>
+                    	<% if (locals.user){ %>
+                    	<button class="ot-send-btn colorblue" type="button" id="sug-send-btn" fid="<%- locals.user._id %>">发送</button>
+                    	<%}else{%>
+                    	<button class="ot-send-btn colorblue" type="button" data-toggle="modal" data-target="#login">请先登录</button>
+                    	<%}%>
+                    	
+                    </div>
+                    
+	    		</div>
+	    	</div>
+    	</div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <div class="xu-index-head">
+        <div class="head-bg1"></div>
+    	<div class="container">
+    		<div class="po-re"><div class="head-bg2"></div></div>
+	    	<%include pub/nav.html%>
+	    </div>
+    	<div class="index-shower-bar">
+    		<div class="container">
+    			<div class="row">
+    				<div class="gav-slider-left">
+    					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                            <% for(let i=0;i < banners.length; i++){%>
+                                <%if(i == 0){%>
+                                <li data-target="#carousel-example-generic" data-slide-to="<%- i %>" class="active"><span></span></li>
+                                <%}else{%>
+                                <li data-target="#carousel-example-generic" data-slide-to="<%- i %>"><span></span></li>
+                                <%}%>
+                            <%}%>
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <% for(let i=0;i < banners.length; i++){%>
+                                <%if(i == 0){%>
+                                <div class="item active">
+                                    <img src="/img/index/banner/<%- banners[i].src %>" alt="<%- banners[i].title %>">
+                                </div>
+                                <%}else{%>
+                                <div class="item">
+                                    <img src="/img/index/banner/<%- banners[i].src %>" alt="<%- banners[i].title %>">
+                                </div>
+                                <%}%>
+                                <%}%>
+                            </div>
+                        </div>
+    				</div>
+    				<div class="gav-slider-right">
+    					<p class="welcome">欢迎来到<strong>小幽</strong>编程社区体验乐趣编程登上新的旅程。</p>
+    					<%if(!locals.user){%>
+    					<div class="user-icon"><img src="/img/index/person-icon.jpg" width="100%" height="100%"></div>
+    					<a href="javascript:;" data-toggle="modal" data-target="#login" class="gav-link-btn">登录</a>
+    					<% }else{ %>
+    					<div class="user-icon"><a href="/users/userindex/<%- locals.user._id %>"><img src="<%- locals.user.headimg %>" width="100%" height="100%"></a></div>
+    					<a href="/users/userindex/<%- locals.user._id %>" class="gov-link-btn">我的项目</a>
+    					<a href="/users/userindex/<%- locals.user._id %>" class="gov-link-btn">我的主页</a>
+    					<%}%>
+    					<a href="/scratch" class="gav-link-btn">开始创作</a>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="xu-main-panel">
+    	<div class="container">
+            <div class="normal-title-bar row">
+                <h4 class="index-bar-title index-title-1" title="精选作品"></h4>
+            </div>
+            <ul class="xu-card-bar row">
+                <% for(let i=0;i < keeplist.length; i++){%>
+                <li>
+                    <div class="xu-list-div">
+                        <a href="/works/content/1/<%- keeplist[i]._id %>" class="xu-content-img">
+                            <img src="/released/covers/<%- keeplist[i].covers%>" alt="<%- keeplist[i].title %>" />
+                        </a>
+                        <div class="xu-list-border">
+                            <a href="/works/content/1/<%- keeplist[i]._id %>" class="xu-contant-title"><%- keeplist[i].title %></a>
+                            <div class="xu-user-panel">
+                            <%  let looknum = keeplist[i].looks;
+                                let zannum = keeplist[i].zan;
+                                if(looknum > 1000){
+                                    looknum = (looknum/1000).toFixed(1) +'k'
+                                }
+                                if(zannum > 1000){
+                                    zannum = (zannum/1000).toFixed(1) +'k'
+                                }
+                            %>
+                            <ul class="user-eyes">
+                                <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+                                <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+                            </ul>
+                        </div>
+                        <div class="xu-user-panel border-top">
+                            <a href="/users/userindex/<%- keeplist[i].user._id %>" target="_blank">
+                                <img src="<%- keeplist[i].user.headimg %>" class="xu-user-headimg" />
+                                <span><%- keeplist[i].user.nickname %></span>
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                </li>
+                <%}%>
+            </ul>
+
+	    	<div class="normal-title-bar row">
+	    		<h4 class="index-bar-title index-title-2" title="最热作品"></h4>
+	    		<a href="/works?page=1&type=a&sort=zan" class="see-more" target="_blank">查看更多</a>
+	    	</div>
+	    	<ul class="xu-card-bar row">
+	    		<% for(let i=0;i < hotlist.length; i++){%>
+				<li>
+					<div class="xu-list-div">
+						<a href="/works/content/1/<%- hotlist[i]._id %>" class="xu-content-img">
+							<img src="/released/covers/<%- hotlist[i].covers%>" alt="<%- hotlist[i].title %>" />
+						</a>
+						<div class="xu-list-border">
+							<a href="/works/content/1/<%- hotlist[i]._id %>" class="xu-contant-title"><%- hotlist[i].title %></a>
+							<div class="xu-user-panel">
+                            <%  let looknum = hotlist[i].looks;
+                                let zannum = hotlist[i].zan;
+                                if(looknum > 1000){
+                                    looknum = (looknum/1000).toFixed(1) +'k'
+                                }
+                                if(zannum > 1000){
+                                    zannum = (zannum/1000).toFixed(1) +'k'
+                                }
+                            %>
+                            <ul class="user-eyes">
+                                <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+                                <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+                            </ul>
+                        </div>
+                        <div class="xu-user-panel border-top">
+                            <a href="/users/userindex/<%- hotlist[i].user._id %>" target="_blank">
+                                <img src="<%- hotlist[i].user.headimg %>" class="xu-user-headimg" />
+                                <span><%- hotlist[i].user.nickname %></span>
+                            </a>
+                        </div>
+						</div>
+					</div>
+				</li>
+    			<%}%>
+	    	</ul>
+
+	    	
+
+	    	<div class="normal-title-bar row">
+	    		<h4 class="index-bar-title index-title-3" title="最新作品"></h4>
+	    		<a href="/works?page=1&type=a&sort=time" class="see-more" target="_blank">查看更多</a>
+	    	</div>
+	    	<ul class="xu-card-bar row">
+                <% for(let i=0;i < newlist.length; i++){%>
+                <li>
+                    <div class="xu-list-div">
+                        <a href="/works/content/1/<%- newlist[i]._id %>" class="xu-content-img">
+                            <img src="/released/covers/<%- newlist[i].covers%>" alt="<%- newlist[i].title %>" />
+                        </a>
+                        <div class="xu-list-border">
+                            <a href="/works/content/1/<%- newlist[i]._id %>" class="xu-contant-title"><%- newlist[i].title %></a>
+                            <div class="xu-user-panel">
+                            <%  let looknum = newlist[i].looks;
+                                let zannum = newlist[i].zan;
+                                if(looknum > 1000){
+                                    looknum = (looknum/1000).toFixed(1) +'k'
+                                }
+                                if(zannum > 1000){
+                                    zannum = (zannum/1000).toFixed(1) +'k'
+                                }
+                            %>
+                            <ul class="user-eyes">
+                                <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+                                <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+                            </ul>
+                        </div>
+                        <div class="xu-user-panel border-top">
+                            <a href="/users/userindex/<%- newlist[i].user._id %>" target="_blank">
+                                <img src="<%- newlist[i].user.headimg %>" class="xu-user-headimg" />
+                                <span><%- newlist[i].user.nickname %></span>
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                </li>
+                <%}%>
+	    	</ul>
+    	</div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+  </body>
+</html>

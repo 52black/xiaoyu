@@ -1,0 +1,82 @@
+<div class="modal slide user-modal" id="login" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content login-content">
+      <div class="modal-body row">
+        <button type="button" class="user-modal-close" data-dismiss="modal" aria-label="Close"></button>
+        <div class="login-l-bar">
+          <img src="/img/logo.png" width="150px">
+          <p>编程公园 scratch3.0 社区网站。</p>
+        </div>
+        <div class="login-r-bar">
+          <div class="show-error-msg"></div>
+          <div id="loginForm" class="userformbar">
+            <div class="form-group">
+              <input type="text" class="form-control" name="username-login" placeholder="账号" maxlength="20" id="login_username" required />
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password-login" placeholder="密码" maxlength="20" id="login_userpwd" required />
+            </div>
+            <button class="btn btn-login" id="login-btn">立即登录</button>
+          </div>
+          <div class="account-login">
+            <p class="go-reg-p go-login-p">没有账号？ <a href="javascript:;" class="user-pa-btn" data-dismiss="modal" data-toggle="modal" data-target="#register" >免费注册</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Register Modal -->
+<div class="modal slide user-modal" id="register" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content reg-content">
+      <div class="modal-body row">
+        <button type="button" class="register-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="show-error-msg"></div>
+        <div id="registerFrom" class="userformbar">
+          <div class="reg-l-bar">
+            <h3 class="title">注册</h3>
+            <ul class="register-function">
+              <li>账号注册</li>
+            </ul>
+            <div class="form-group input-group-lg">
+              <input type="text" class="form-control" id="reg_username" placeholder="创建账号（字母+数字组合，6位含以上）" name="username-reg" maxlength="20">
+            </div>
+            <div class="form-group input-group-lg">
+              <input type="text" class="form-control" id="reg_nickname" placeholder="给自己创建一个昵称" name="username-reg" maxlength="20">
+            </div>
+            <div class="form-group input-group-lg">
+              <input type="password" class="form-control" id="reg_userpwd" placeholder="创建密码（6位含以上，不能包含特殊字符）" name="password-reg" maxlength="20">
+            </div>
+            <div class="form-group input-group-lg">
+              <input type="password" class="form-control" id="reg_same_userpwd" placeholder="再次确认密码" name="same-password-reg">
+            </div>
+            <button type="button" class="btn btn-register" id="reg-btn">立即注册</button>
+            <div class="account-register">
+              <p class="go-reg-p">已有账号？ <a href="javascript:;" class="user-pa-btn" data-dismiss="modal" data-toggle="modal" data-target="#login" id="toggle-login">立即登录</a></p>
+            </div>
+          </div>
+          <div class="reg-r-bar"></div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- noteModal -->
+<div class="modal slide note-modal" id="noteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提 示</h4>
+      </div>
+      <div class="modal-body">
+        <p id="nodemsg"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/plugin/jquery.min.js"></script>
+<script type="text/javascript" src="/boot/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>

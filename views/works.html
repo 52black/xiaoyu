@@ -1,0 +1,135 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <div class="xu-index-head bg2">
+        <div class="head-bg1"></div>
+        <div class="container">
+            <div class="po-re"><div class="head-bg2"></div></div>
+            <%include pub/nav.html%>
+            <div class="works-head-bar row">
+                <div class="search-term-bar">
+                <%
+                    let a = '', b='', c='', d='', e='',f='',g='';
+                    if(types == 'a'){
+                        a = 'active'
+                    }else if(types == 'b'){
+                        b = 'active'
+                    }else if(types == 'c'){
+                        c = 'active'
+                    }else if(types == 'd'){
+                        d = 'active'
+                    }else if(types == 'e'){
+                        e = 'active'
+                    }else if(types == 'f'){
+                        f = 'active'
+                    }else if(types == 'g'){
+                        g = 'active'
+                    }
+                %>
+                    <a href="/works?page=1&type=a&sort=zan" class="<%- a%>">所有</a>
+                    <a href="/works?page=1&type=b&sort=zan" class="<%- b%>">游戏</a>
+                    <a href="/works?page=1&type=c&sort=zan" class="<%- c%>">动画</a>
+                    <a href="/works?page=1&type=d&sort=zan" class="<%- d%>">音乐</a>
+                    <a href="/works?page=1&type=e&sort=zan" class="<%- e%>">模拟</a>
+                    <a href="/works?page=1&type=f&sort=zan" class="<%- f%>">搞笑</a>
+                    <a href="/works?page=1&type=g&sort=zan" class="<%- g%>">故事</a>
+                </div>
+                <ul class="w-sort-bar">
+                    <%if(sorttype == 'zan'){%>
+                        <li class="mosthot active"><a href="<%- sorturl%>zan">最热</a></li>
+                    <%}else{%>
+                        <li class="mosthot"><a href="<%- sorturl%>zan">最热</a></li>
+                    <%}%>
+                    <%if(sorttype == 'time'){%>
+                        <li class="mostnew active"><a href="<%- sorturl%>time">最新</a></li>
+                    <%}else{%>
+                        <li class="mostnew"><a href="<%- sorturl%>time">最新</a></li>
+                    <%}%>
+                    
+                </ul>
+                <div class="works-search-panel">
+                    <div class="w-search-bar">
+                        <input type="text" id="searchworks" name="searchworks" placeholder="作品搜索..." />
+                        <button type="button" id="w-search-btn" class="w-search-btn"><img src="/img/works/search.svg" width="22px" alt="搜索" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="xu-mian-panel">
+        <div class="container">
+            <%if(workslist.length > 0){ let listlength = workslist.length %>
+                <input type="hidden" value="<%= pagecount%>" id="compagecount">
+                <input type="hidden" value="<%= compageid%>" id="compageid">
+                <input type="hidden" value="<%= sorttype%>" id="sorttype">
+                <input type="hidden" value="<%= types%>" id="pagetypes">
+                <ul class="xu-card-bar row">
+                    <% for(let i=0; i < listlength; i++){%>
+                    <li>
+                        <div class="xu-list-div">
+                            <a href="/works/content/1/<%- workslist[i]._id%>" class="xu-content-img">
+                                <img src="/released/covers/<%- workslist[i].covers%>" alt="<%- workslist[i].title %>" />
+                            </a>
+                            <div class="xu-list-border">
+                                <a href="/works/content/1/<%- workslist[i]._id%>" class="xu-contant-title"><%- workslist[i].title %></a>
+                                <div class="xu-user-panel">
+                                    <%  let looknum = workslist[i].looks;
+                                        let zannum = workslist[i].zan;
+                                        if(looknum > 1000){
+                                            looknum = (looknum/1000).toFixed(1) +'k'
+                                        }
+                                        if(zannum > 1000){
+                                            zannum = (zannum/1000).toFixed(1) +'k'
+                                        }
+                                    %>
+                                    <ul class="user-eyes">
+                                        <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+                                        <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+                                    </ul>
+                                </div>
+                                <div class="xu-user-panel border-top">
+                                    <a href="/users/userindex/<%- workslist[i].user._id %>" target="_blank">
+                                        <img src="<%- workslist[i].user.headimg %>" class="xu-user-headimg" />
+                                        <span><%- workslist[i].user.nickname %></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <%}%>
+                </ul>
+            <%}else{%>
+            <div class="note-nowroks">
+                <img src="/img/icon/radar.svg" width="30"> 没有内容哦
+            </div>
+            <%}%>
+            
+            <div id="work-pagination" class="pager row"></div>
+        </div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+    <script type="text/javascript" src="/plugin/jqpaginator.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        let user_page_id = $('#userid-page').val();
+        let sorttype = $('#sorttype').val();
+        let pagetypes = $('#pagetypes').val();
+        var limittxt = 'page=';
+        var countnums = $('#compagecount').val();
+        var currentPage = parseInt($('#compageid').val());
+        if(countnums >  29 ){
+            var total = Math.ceil(countnums/30);
+            var prev = currentPage -1;
+            var next = currentPage +1;
+            $.jqPaginator('#work-pagination', {
+                totalPages: total,
+                visiblePages:5,
+                currentPage:currentPage,
+                page: '<li class="page"><a href="/works?'+limittxt+'{{page}}'+'&type='+pagetypes+'&sort='+sorttype+'">{{page}}</a></li>',
+            });
+        }
+    })
+    </script>
+  </body>
+</html>

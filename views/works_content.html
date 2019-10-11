@@ -1,0 +1,416 @@
+<%include pub/head.html%>
+</head>
+<style type="text/css">
+@keyframes line-scale {
+  0% {
+    -webkit-transform: scaley(1);
+            transform: scaley(1); }
+
+  50% {
+    -webkit-transform: scaley(0.4);
+            transform: scaley(0.4); }
+
+  100% {
+    -webkit-transform: scaley(1);
+            transform: scaley(1); } }
+
+.line-scale > div:nth-child(1) {
+  -webkit-animation: line-scale 1s 0.1s infinite cubic-bezier(.2, .68, .18, 1.08);
+          animation: line-scale 1s 0.1s infinite cubic-bezier(.2, .68, .18, 1.08); }
+.line-scale > div:nth-child(2) {
+  -webkit-animation: line-scale 1s 0.2s infinite cubic-bezier(.2, .68, .18, 1.08);
+          animation: line-scale 1s 0.2s infinite cubic-bezier(.2, .68, .18, 1.08); }
+.line-scale > div:nth-child(3) {
+  -webkit-animation: line-scale 1s 0.3s infinite cubic-bezier(.2, .68, .18, 1.08);
+          animation: line-scale 1s 0.3s infinite cubic-bezier(.2, .68, .18, 1.08); }
+.line-scale > div:nth-child(4) {
+  -webkit-animation: line-scale 1s 0.4s infinite cubic-bezier(.2, .68, .18, 1.08);
+          animation: line-scale 1s 0.4s infinite cubic-bezier(.2, .68, .18, 1.08); }
+.line-scale > div:nth-child(5) {
+  -webkit-animation: line-scale 1s 0.5s infinite cubic-bezier(.2, .68, .18, 1.08);
+          animation: line-scale 1s 0.5s infinite cubic-bezier(.2, .68, .18, 1.08); }
+.line-scale > div {
+  background-color: #00bcd4;
+  width: 4px;
+  height: 35px;
+  border-radius: 2px;
+  margin: 2px;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  display: inline-block; }
+.loader-inner{
+	margin: auto;
+    width: 60px;
+    margin-top: 150px;
+}
+.loader-text{
+	text-align: center;
+	margin-top: 6px;
+}
+</style>
+  <body class="bodybg">
+  	<input type="hidden" id="s_worksid" value="<%- works.worksid %>">
+    <div class="xu-index-head bg2" style="overflow: visible">
+    	<div class="container">
+	    	<%include pub/nav.html%>
+	    </div>
+		</div>
+	<%if(locals.user){%>
+  	<input type="hidden" id="scratch_user_id" value="<%- locals.user._id%>">
+  	<script type="text/javascript">
+  		var user_headimg = '<%- locals.user.headimg%>';
+  	</script>
+  	<%}else{%>
+  	<input type="hidden" id="scratch_user_id">
+  	<%}%>
+  <div class="xu-mian-panel">
+    <div class="container">
+    	<%if(works){%>
+    	<input type="hidden" value="<%- works._id%>" id="works_id" />
+			<div class="wroks-content-panel no-pb">
+				<div class="works-cot-top">
+					<h4 class="title"><%- works.title%></h4>
+					<div class="works-author-bar">
+						<a href="/users/userindex/<%- works.user._id%>" target="_blank">
+							<img src="<%- works.user.headimg%>" class="works-user-headimg imgsmall" />
+							<span><%- works.user.nickname%></span>
+						</a>
+						<span class="eml">发布于：<%- createtime %></span>
+						<span class="eml">更新于：<%- updatetime %></span>
+						<span class="eml"><i class="icon iconfont icon-footprint"></i> <%= works.looks %></span>
+						<span class="eml tipwork-btn" data-toggle="modal" data-target="#tipWork"><i class="icon iconfont icon-warnfill"></i> 举报</span>
+					</div>
+				</div>
+				<div class="works-dis-panel row">
+					<div class="w-dis-left">
+						<p style="color:#999;font-size: 14px !important">项目较大，如没有出现，请耐心等待一会儿。</p>
+						<div class="loader-scratch">
+							<div class="loader-inner line-scale">
+					          <div></div>
+					          <div></div>
+					          <div></div>
+					          <div></div>
+					          <div></div>
+					        </div>
+					        <p class="loader-text">正在加载，请稍等...</p>
+						</div>
+						<div class="w-dis-vm" id="scratch-player"></div>
+					</div>
+					<div class="w-dis-right">
+						<div class="w-cot-msg">
+							<h4 class="title">作品简介</h4>
+							<p><%- works.abstract%></p>
+						</div>
+						<div class="w-cot-msg">
+							<h4 class="title">操作说明</h4>
+							<%if(works.explain){%>
+								<p><%- works.explain%></p>
+							<%}else{%>
+								<p>暂无操作说明</p>
+							<%}%>
+							
+						</div>
+						<div class="w-cot-msg w-l-tags">
+							<h4 class="title">标签</h4>
+							<%let a='', b='', c='', d='', e='',f='',g='',h='',i='',j='',k='',l='',m='',n='';%>
+			                <%let classifyList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];for(let o = 0;o < classify.length; o++){%>
+			                    <%if(works.tags.indexOf(classifyList[o]) !== -1){%>
+			                        <a href="/works?page=1&type=<%= classifyList[o]%>&sort=zan" target="_blank"><%= classify[o]%></a>
+			                    <%}%>
+			                <%}%>
+						</div>
+						<div class="do-this-job">
+							<%if(works && locals.user && works.user._id == locals.user._id){%>
+							<a href="/scratch#<%- works.worksid %>" class="check-job">查看积木</a>
+							<%}else{%>
+								<%if(works.isOnly !== true){%>
+								<a href="/scratch#<%- works.worksid %>" class="check-job">查看积木</a>
+								<%}else{%>
+								<a class="check-job only">查看积木</a>
+								<%}%>
+							<%}%>
+						</div>
+					</div>
+				</div>
+				<div class="works-share-bar">
+					<% if(locals.user){ %>
+		                <%
+		                let zan_user_id = locals.user._id;
+		                let zanList = works.zanlist;
+		                let keepList = works.keeplist;
+		                let _wzans = zanList.indexOf(zan_user_id);
+		                let _wkeep = keepList.indexOf(zan_user_id);
+		                let wzan_total = works.zan;
+
+		                if(wzan_total > 1000){
+		                    wzan_total = (wzan_total/1000).toFixed(1) +'k'
+		                }
+		                %>
+	          <% if(_wzans !== -1){ %>
+						<span class="icon-span ac" id="zan-works-btn" wzan="<%- works.zan %>"><i class="icon iconfont icon-appreciate_fill_light"></i> <span><%- wzan_total %></span></span>
+						<%}else{%>
+						<span class="icon-span" id="zan-works-btn" wzan="<%- works.zan %>"><i class="icon iconfont icon-appreciate_fill_light"></i> <span><%- wzan_total %></span></span>
+						<%}%>
+						<% if(_wkeep !== -1){ %>
+						<span class="icon-span ac" id="keep-works-btn"><i class="icon iconfont icon-favorfill"></i> <span>已收藏</span></span>
+						<%}else{%>
+						<span class="icon-span" id="keep-works-btn"><i class="icon iconfont icon-favorfill"></i> <span>收藏</span></span>
+						<%}%>
+						<span class="fg-line"></span>
+						<span class="fx-span-bar">分享到:
+							<a href="" class="i-wx"><i class="icon iconfont icon-weixin"></i><div id="qrcode" class="weixin-bar"></div></a>
+						</span>
+					<% }else{ %>
+						<span class="icon-span" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-appreciate_fill_light"></i> <span><%- works.zan %></span></span>
+						<span class="icon-span" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-favorfill"></i> 收藏</span>
+						<span class="fg-line"></span>
+						<span class="fx-span-bar">分享到:
+							<a href="" class="i-wx"><i class="icon iconfont icon-weixin"></i><div id="qrcode" class="weixin-bar"></div></a>
+						</span>
+					<% } %>
+				</div>
+			</div>
+			<%}%>
+			<div class="wroks-content-panel">
+				<div class="other-words-bar" id="liuyanban">
+					<% if(locals.user){ %>
+	          <div class="ly-title">
+	              <h3>评论区_</h3>
+	              <span>请文明发言，相互尊重，互相学习，共建设和谐社区环境</span>
+	          </div>
+	          <div class="ot-add-comment">
+	              <div class="po-re">
+	                  <textarea class="form-control" rows="4" maxlength="140" placeholder="记得保持言论友善和谦虚哦，互相学习，共同进步。"></textarea>
+	                  <p class="hky-write">还可以输入<span>140</span>个字</p>
+	              </div>
+	              <button class="ot-send-btn" disabled="disabled" type="button" id="wot-send-btn" fid="<%-locals.user._id%>">留言</button>
+	          </div>
+	        <%}else{%>
+	        	<div class="ly-title">
+	              <h3>评论区_</h3>
+	              <span><a href="javascript:;" data-toggle="modal" data-target="#login">登录</a>之后才能评论哦</span>
+	          </div>
+	        <%}%>
+
+	        <% if (wcomments){ %>
+	          <input type="hidden" value="<%= pagecount%>" id="compagecount">
+	          <input type="hidden" value="<%= compageid%>" id="compageid">
+	          <div class="ot-common-words">
+	          <% if(locals.user){ %>
+	              <% let zan_user_id = locals.user._id; for(let i=0; i<wcomments.length; i++){ 
+	              let replyList = wcomments[i].reply, 
+	                  zanNum = wcomments[i].zan,
+	                  zanList = wcomments[i].zanlist;
+	              let hadzan = zanList.indexOf(zan_user_id);
+	              %>
+	              <div class="ot-common-item row" id="<%- wcomments[i]._id %>">
+	                  <div class="ot-item-left">
+	                      <a href="/users/userindex/<%- wcomments[i].fromid._id %>"><img src="<%- wcomments[i].fromid.headimg %>" width="50" height="50"></a>
+	                  </div>
+	                  <div class="ot-item-content">
+	                      <div class="row">
+	                          <div class="ot-user-name"><a href="/users/userindex/<%- wcomments[i].fromid._id %>"><%- wcomments[i].fromid.nickname %></a><span class="commenttime"><%- wcomments[i].time %></span></div>
+	                          <div class="ot-cont-bottom" uid="<%- wcomments[i].fromid._id %>" cid="<%- wcomments[i]._id %>">
+                              <p class="ot-user-cont"><%- wcomments[i].content %></p>
+                              <div class="ot-user-controls">
+																<% if(hadzan !== -1){%>
+																<span class="f-user-zan fw-zan ac"><i class="icon iconfont icon-appreciate_fill_light"></i> <span zannum="<%- zanNum %>"><%- zanNum %></span></span>
+																<%}else{%>
+																<span class="f-user-zan fw-zan"><i class="icon iconfont icon-appreciate_fill_light"></i> <span zannum="<%- zanNum %>"><%- zanNum %></span></span>
+																<%}%>
+																<span class="wot-comment-second"><i class="icon iconfont icon-comment_fill_light"></i> 回复</span>
+																<% if(locals.user._id == wcomments[i].fromid._id){ %>
+						                    <span class="wot-comment-delete dismiss" types="fwcom"><i class="icon iconfont icon-deletefill"></i> 删除</span>
+						                    <%}else{%>
+						                    <span class="wot-comment-tip dismiss" types="fwtip"><i class="icon iconfont icon-warnfill"></i> 举报</span>
+						                    <%}%>
+                              </div>
+	                          </div>
+	                      </div>
+
+	                      <div class="ot-common-item2">
+	                          <% for(let ii=0; ii<replyList.length; ii++){
+	                          let szanNum = replyList[ii].zan,
+	                              szanList = replyList[ii].zanlist,
+	                              shadzan = szanList.indexOf(zan_user_id);
+	                          %>
+	                          <div class="second-ot-comment row" id="<%- replyList[ii]._id %>">
+	                              <div class="ot-item-left">
+	                                  <a href="/users/userindex/<%- replyList[ii].fromid._id %>"><img src="<%- replyList[ii].fromid.headimg %>" width="50" height="50"></a>
+	                              </div>
+	                              <div class="ot-item-content">
+	                                  <div class="row">
+	                                      <div class="ot-user-name"><a href="/users/userindex/<%- replyList[ii].fromid._id %>"><%- replyList[ii].fromid.nickname %></a><span class="commenttime"><%- replyList[ii].time %></span></div>
+	                                      <div class="ot-cont-bottom" uid="<%- replyList[ii].fromid._id %>" cid="<%- wcomments[i]._id %>" tid="<%- replyList[ii]._id %>" >
+	                                          <p class="ot-user-cont"><span class="tosome-sp">@<a href="/users/userindex/<%- replyList[ii].toid._id %>"><%- replyList[ii].toid.nickname %></a>：</span><%- replyList[ii].content %></p>
+	                                          <div class="ot-user-controls">
+	                                              <% if(shadzan !== -1){%>
+	                                              <span class="s-user-zan sw-zan ac"><i class="icon iconfont icon-appreciate_fill_light"></i> <span zannum="<%- szanNum %>"><%- szanNum %></span></span>
+	                                              <%}else{%>
+	                                              <span class="s-user-zan sw-zan"><i class="icon iconfont icon-appreciate_fill_light"></i> <span zannum="<%- szanNum %>"><%- szanNum %></span></span>
+	                                              <%}%>
+	                                              <span class="wot-comment-second"><i class="icon iconfont icon-comment_fill_light"></i> 回复</span>
+	                                              <% if(locals.user._id == replyList[ii].fromid._id){ %>
+							                                  <span class="wot-comment-delete dismiss" tid="<%- replyList[ii]._id %>" types="swcom"><i class="icon iconfont icon-deletefill"></i> 删除</span>
+							                                  <%}else{%>
+							                                  <span class="wot-comment-tip dismiss" tid="<%- replyList[ii]._id %>" types="swtip"><i class="icon iconfont icon-warnfill"></i> 举报</span>
+							                                  <%}%>
+	                                          </div>
+	                                      </div>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                          <% } %>
+	                      </div>
+	                  </div>
+	              </div>
+	              <%}%>
+	          <%}else{%>
+	              <%if(wcomments.length == 0){%>
+	              <div class="nocomment-bar">
+	              	<i class="icon iconfont icon-discover"></i>暂无留言
+	              </div>
+	              <%}else{%>
+	                <% 
+	                for(let i=0; i<wcomments.length; i++){ 
+	                let replyList = wcomments[i].reply, 
+	                    zanNum = wcomments[i].zan,
+	                    zanList = wcomments[i].zanlist;
+	                %>
+	                <div class="ot-common-item row">
+	                    <div class="ot-item-left">
+	                        <a href="/users/userindex/<%- wcomments[i].fromid._id %>"><img src="<%- wcomments[i].fromid.headimg %>" width="50" height="50"></a>
+	                    </div>
+	                    <div class="ot-item-content">
+	                        <div class="row">
+	                            <div class="ot-user-name"><a href="/users/userindex/<%- wcomments[i].fromid._id %>"><%- wcomments[i].fromid.nickname %></a><span class="commenttime"><%- wcomments[i].time %></span></div>
+	                            <div class="ot-cont-bottom" uid="<%- wcomments[i].fromid._id %>" cid="<%- wcomments[i]._id %>">
+	                                <p class="ot-user-cont"><%- wcomments[i].content %></p>
+	                            </div>
+	                        </div>
+
+	                        <div class="ot-common-item2">
+	                            <% for(let ii=0; ii<replyList.length; ii++){
+	                            let szanNum = replyList[ii].zan,
+	                                szanList = replyList[ii].zanlist;
+	                            %>
+	                            <div class="second-ot-comment row">
+	                                <div class="ot-item-left">
+	                                    <a href="/users/userindex/<%- replyList[ii].fromid._id %>"><img src="<%- replyList[ii].fromid.headimg %>" width="50" height="50"></a>
+	                                </div>
+	                                <div class="ot-item-content">
+	                                    <div class="row">
+	                                        <div class="ot-user-name"><a href="/users/userindex/<%- replyList[ii].fromid._id %>"><%- replyList[ii].fromid.nickname %></a><span class="commenttime"><%- replyList[ii].time %></span></div>
+	                                        <div class="ot-cont-bottom" uid="<%- replyList[ii].fromid._id %>" cid="<%- wcomments[i]._id %>" tid="<%- replyList[ii]._id %>" >
+	                                            <p class="ot-user-cont"><span class="tosome-sp">@<a href="/users/userindex/<%- replyList[ii].toid._id %>"><%- replyList[ii].toid.nickname %></a>：</span><%- replyList[ii].content %></p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <% } %>
+	                        </div>
+	                    </div>
+	                </div>
+	                <%}%>
+	              <%}%>
+	          </div>
+	          <div class="pager row" id="w-comment-pagination"></div>
+	          <% }} %>
+	      </div>
+			</div>
+	  </div>
+	</div>
+    </div>
+    <%include pub/foot.html%>
+    <div class="modal slide modal-small" id="deleteWcomment" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提醒</h4>
+              </div>
+              <div class="modal-body delete-modal-body">
+                <input type="hidden" id="wdeletecid-f">
+                <input type="hidden" id="wdeletecid-s">
+                确认要删除此条评论么？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="delete-wcomf-btn">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal slide modal-small" id="tipWcomment" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">举报原因</h4>
+              </div>
+              <div class="modal-body delete-modal-body">
+                <input type="hidden" id="wtipcid-f">
+                <input type="hidden" id="wtipcid-s">
+                <textarea class="form-control" rows="4" id="tip-wcomf-val"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="tip-wcomf-btn">确认举报</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal slide modal-small" id="tipWork" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">举报原因</h4>
+              </div>
+              <div class="modal-body delete-modal-body">
+                <textarea class="form-control" rows="4" id="tip-work-val"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="tip-work-btn">确认举报</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <%include pub/script.html%>
+	<script type="text/javascript" src="/plugin/qrcode.js"></script>
+    <script type="text/javascript">
+    	let _href = window.location.href;
+		new QRCode(document.getElementById("qrcode"), _href);
+    	var worksplayId = $('#s_worksid').val();
+    	$(function(){
+    		let user_page_id = $('#userid-page').val();
+	        var limittxt = 'page=';
+	        var countnums = $('#compagecount').val();
+	        var currentPage = parseInt($('#compageid').val());
+	        if(countnums >  29 ){
+	            var total = Math.ceil(countnums/30);
+	            var prev = currentPage -1;
+	            var next = currentPage +1;
+	            $.jqPaginator('#comment-pagination', {
+	                totalPages: total,
+	                visiblePages:5,
+	                currentPage:currentPage,
+	                prev: '<li class="prev"><a href="/users/usercomment'+user_page_id+'?'+limittxt+prev+'" >&lt</a></li>',
+					next: '<li><a href="/users/usercomment'+user_page_id+'?'+limittxt+next+'">&gt</a></li>',
+					page: '<li class="page"><a href="/users/usercomment/'+user_page_id+'?'+limittxt+'{{page}}">{{page}}</a></li>',
+	            });
+	        }
+	    })
+	    var files_msg = []
+    </script>
+    <script type="text/javascript" src="/scratches/player/lib.min.js"></script>
+    <script type="text/javascript">
+    	window.onload = function(){
+    		$('.loader-scratch').hide()
+    	}
+    </script>
+    <script type="text/javascript" src="/scratches/player/compatibility.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<%include pub/admin_head.html%>
+<style type="text/css">
+    body {
+        background: url(../admin/img/login-image.jpg) no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+    }
+    #main-wrapper {
+        padding: 8%;
+    }
+    .center {
+        margin: 0 auto;
+        float: none!important;
+    }
+    .panel {
+    box-shadow: none;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px!important;
+    margin-bottom: 25px
+}
+
+.panel .panel-heading {
+    padding: 20px;
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 0!important;
+    height: 55px;
+    font-size: 14px;
+    font-weight: 600
+}
+
+.panel .panel-heading .panel-title {
+    font-size: 13px;
+    letter-spacing: normal;
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-weight: 600
+}
+
+.panel .panel-heading .panel-title small {
+    font-size: 80%
+}
+
+.panel .panel-heading .panel-control {
+    float: right;
+    height: auto
+}
+
+.panel .panel-heading .panel-control a {
+    text-decoration: none;
+    color: #ccc;
+    margin-left: 5px;
+    font-size: 14px;
+    float: left
+}
+
+.panel .panel-heading .panel-control a:hover {
+    color: #a2a2a2
+}
+
+.panel .panel-body {
+    position: relative;
+    padding: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.panel .panel-heading+.panel-body {
+    padding: 5px 20px 20px
+}
+
+.panel-default .panel-heading {
+    border-radius: 3px;
+    background: #f1f1f1;
+    border-color: #e7e7e7
+}
+
+.panel-blue,.panel-green,.panel-purple,.panel-red,.panel-yellow {
+    border-color: transparent
+}
+
+.panel-default .panel-heading .panel-control a {
+    color: #bbb
+}
+
+.panel-default .panel-heading .panel-control a:hover {
+    color: #a2a2a2
+}
+
+.panel-primary .panel-heading {
+    border-radius: 3px;
+    background: #756BB0;
+    color: #fff
+}
+
+.panel-primary .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-primary .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-success .panel-heading {
+    border-radius: 3px;
+    background: #30B19B;
+    color: #fff
+}
+
+.panel-success .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-success .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-info .panel-heading {
+    border-radius: 3px;
+    background: #14A2BB;
+    color: #fff
+}
+
+.panel-info .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-info .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-warning .panel-heading {
+    border-radius: 3px;
+    background: #DFBA47;
+    color: #fff
+}
+
+.panel-warning .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-warning .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-danger .panel-heading {
+    border-radius: 3px;
+    background: #DE4D4D;
+    color: #fff
+}
+
+.panel-danger .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-danger .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-transparent {
+    background: 0 0;
+    box-shadow: none
+}
+
+.panel-transparent .panel-heading .panel-control a {
+    color: #ccc
+}
+
+.panel-transparent .panel-heading .panel-control a:hover {
+    color: #a2a2a2
+}
+
+.panel-white {
+    width: 360px;
+    margin: auto;
+    background: #fff
+}
+
+.panel-white .panel-heading .panel-control a {
+    color: #afafaf
+}
+
+.panel-white .panel-heading .panel-control a:hover {
+    color: #5f5f5f
+}
+
+.panel-purple {
+    background: #756BB0
+}
+
+.panel-purple .panel-body,.panel-purple .panel-heading,.panel-purple .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-purple .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-green {
+    background: #30B19B
+}
+
+.panel-green .panel-body,.panel-green .panel-heading,.panel-green .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-green .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-blue {
+    background: #14A2BB
+}
+
+.panel-blue .panel-body,.panel-blue .panel-heading,.panel-blue .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-blue .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-yellow {
+    background: #DFBA47
+}
+
+.panel-yellow .panel-body,.panel-yellow .panel-heading,.panel-yellow .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-yellow .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-red {
+    background: #DE4D4D
+}
+
+.panel-red .panel-body,.panel-red .panel-heading,.panel-red .panel-heading .panel-control a {
+    color: #fff
+}
+
+.panel-red .panel-heading .panel-control a:hover {
+    color: #f1f1f1
+}
+
+.panel-footer {
+    padding: 20px
+}
+
+.panel-placeholder {
+    border: 2px dashed #ddd;
+    margin-bottom: 20px
+}
+.login-box,.register-box {
+    margin: auto;
+    width:auto;
+    padding: 0;
+    max-width: 360px;
+    height: 300px;
+}
+
+.login-box .logo-name,.register-box .logo-name {
+    display: block;
+    font-size: 15px;
+    text-decoration: none;
+    color: #8491a6
+}
+
+.login-box .user-box,.register-box .user-box {
+    display: block;
+    clear: both;
+    overflow: hidden
+}
+
+.login-box .user-box img,.register-box .user-box img {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: 0 auto
+}
+
+.login-box .user-box form,.register-box .user-box form {
+    overflow: hidden
+}
+
+.login-box .login-footer,.register-box .register-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+        </style>
+    </head>
+    <body class="page-login">
+        <div id="main-wrapper">
+            <div class="center">
+                <div class="panel panel-white" id="js-alerts">
+                    <div class="panel-body">
+                        <div class="login-box">
+                            <a href="index.html" class="logo-name text-lg text-center m-t-xs">后台登录</a>
+                            <p class="text-center m-t-md">请填写账号和密码</p>
+                            <div class="m-t-md" name="login" id="loginform">
+                                <div class="form-group">
+                                    <input type="text" id="username" class="form-control" placeholder="管理员账号" autofocus="autofocus" >
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="adminpwd" id="adminpwd" class="form-control password" placeholder="密码">
+                                </div>
+                                <button type="button" class="btn btn-success btn-block" id="login">登 录</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/admin/plugins/jquery/jquery-3.1.0.min.js"></script>
+        <script type="text/javascript">
+            $('#login').click(function () {
+                let loginmsg = {
+                    username: $('#username').val(),
+                    password: $('#adminpwd').val()
+                }
+                $.ajax({
+                    url:'/admin/signin',
+                    type:'POST',
+                    data:loginmsg,
+                    success:function(data){
+                        if(data.status == 'success'){
+                            window.location.href = '/admin/index'
+                        }else{
+                            alert('用户名或密码错误')
+                        }
+                    }
+                })
+            })
+            $(document).keyup(function(event){
+              if(event.keyCode ==13){
+                $("#login").trigger("click");
+              }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,127 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <div class="xu-index-head bg2" style="overflow: visible">
+    	<div class="head-bg4"></div>
+    	<div class="container">
+	    	<%include pub/nav.html%>
+	    </div>
+	</div>
+	<div class="xu-mian-panel">
+        <div class="container">
+        	<div class="row">
+        		<div class="mw-left-bar">
+        			<%if(typer == 'unreleased'){%>
+        			<ul>
+        				<li class="active"><a href="/users/userworks/unreleased">未发布的作品</a></li>
+        				<li><a href="/users/userworks/released">已发布的作品</a></li>
+        			</ul>
+        			<%}else if(typer == 'released'){%>
+        			<ul>
+        				<li><a href="/users/userworks/unreleased">未发布的作品</a></li>
+        				<li class="active"><a href="/users/userworks/released">已发布的作品</a></li>
+        			</ul>
+        			<%}%>
+        		</div>
+        		<div class="mw-right-bar">
+        			<%if(typer == 'unreleased'){%>
+	        			<div class="myjob-title border">
+	                        <h3>我的作品 <span>未发布的</span></h3>
+	                        <a href="/scratch" class="new-job"><i class="icon iconfont icon-repair"></i> 新建作品</a>
+	                    </div>
+	                    <%if(worksdata.length > 0){%>
+		                    <ul class="myjob-card-bar row">
+				    			<% for(let i=0;i < worksdata.length; i++){%>
+								<li>
+									<div class="xu-list-div">
+										<div class="xu-content-img">
+											<img src="/unreleased/covers/<%- worksdata[i].covers%>" alt="" />
+										</div>
+										<div class="xu-list-border">
+											<span class="xu-contant-title unr"><%- worksdata[i].title %></span>
+											<div class="xu-user-panel border-top unr">
+												<ul class="wm-control-ul">
+													<li><a href="javascript:;" class="delete-works-a" data-toggle="modal" data-target="#deleteWorks" wtype="unrel" wid="<%- worksdata[i]._id %>" wlocals="<%- worksdata[i].localsname %>" clocals="<%-worksdata[i].covers %>"><i class="icon iconfont icon-deletefill" ></i>删除</a></li>
+													<li><a href="/scratch#<%- worksdata[i].localsname %>.184"><i class="icon iconfont icon-writefill"></i>编辑</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+				    			<%}%>
+					    	</ul>
+		                <%}else{%>
+		                    <p class="note-nowroks"><i class="icon iconfont icon-discoverfill"></i> 还没有作品哦</p>
+		                <%}%>
+                    <%}else{%>
+	                    <div class="myjob-title border">
+	                        <h3>我的作品 <span>已发布的</span></h3>
+	                        <a href="/scratch" class="new-job"><i class="icon iconfont icon-repair"></i> 新建作品</a>
+	                    </div>
+	                    <%if(worksdata.length > 0){%>
+	                    <ul class="myjob-card-bar row">
+	                        <% for(let i=0; i < worksdata.length; i++){%>
+	                        <li>
+	                            <div class="xu-list-div">
+	                                <a href="/works/content/1/<%- worksdata[i]._id%>" class="xu-content-img">
+	                                    <img src="/released/covers/<%- worksdata[i].covers%>" alt="<%- worksdata[i].title %>" />
+	                                </a>
+	                                <div class="xu-list-border">
+	                                    <a href="/works/content/1/<%- worksdata[i]._id%>" class="xu-contant-title"><%- worksdata[i].title %></a>
+	                                    <div class="xu-user-panel">
+	                                        <%  let looknum = worksdata[i].looks;
+	                                            let zannum = worksdata[i].zan;
+	                                            if(looknum > 1000){
+	                                                looknum = (looknum/1000).toFixed(1) +'k'
+	                                            }
+	                                            if(zannum > 1000){
+	                                                zannum = (zannum/1000).toFixed(1) +'k'
+	                                            }
+	                                        %>
+	                                        <ul class="user-eyes">
+		                                        <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+		                                        <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+		                                    </ul>
+	                                    </div>
+	                                    <div class="xu-user-panel border-top unr">
+																				<ul class="wm-control-ul">
+																					<li><a href="javascript:;" class="delete-works-a" data-toggle="modal" data-target="#deleteWorks" wtype="rels" wid="<%- worksdata[i]._id %>" wlocals="<%- worksdata[i].worksid %>" clocals="<%-worksdata[i].covers %>"><i class="icon iconfont icon-deletefill"></i>删除</a></li>
+																					<li><a href="/scratch#<%- worksdata[i].worksid %>"><i class="icon iconfont icon-writefill"></i>编辑</a></li>
+																				</ul>
+																			</div>
+	                                </div>
+	                            </div>
+	                        </li>
+	                        <%}%>
+	                    </ul>
+	                <%}else{%>
+	                    <p class="note-nowroks"><i class="icon iconfont icon-discoverfill"></i> 还没有发布过作品哦</p>
+	                <%}%>
+                    <%}%>
+        		</div>
+        	</div>
+        </div>
+    </div>
+
+    <!-- delete works modal -->
+	<div class="modal slide note-modal delete" id="deleteWorks" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content reg-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">提 示</h4>
+	      </div>
+	      <div class="modal-body">
+	        <h4 style="font-weight: bold;text-align: center;">确认要删除吗？</h4>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-danger" id="delete-works" deltype="unrel" delid="0" dellocals="0" delcovers="0">删除</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+  </body>
+</html>

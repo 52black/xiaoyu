@@ -1,0 +1,65 @@
+<%include pub/admin_head.html%>
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div class="page-container">
+            <%include pub/admin_nav.html%>
+            <!-- Page Content -->
+            <div class="page-content">
+            	<%include pub/admin_top.html%>
+                <div class="page-inner">
+                    <div id="main-wrapper">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>修改密码</h4>
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>旧密码</label>
+                                            <input type="password" class="form-control" id="admin-change-oldpwd" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>新密码</label>
+                                            <input type="password" class="form-control" id="admin-change-newpwd">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>确认密码</label>
+                                            <input type="password" class="form-control" id="admin-change-samepwd">
+                                        </div>
+                                        <button type="button" class="btn btn-primary" id="admin-changepwd-btn" data-user="<%- locals.admin._id %>">确认</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>开设新的管理账号</h4>
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+    									<div class="form-group">
+    										<label>用户名</label>
+    										<input type="text" class="form-control" id="admin-reg-username" >
+    									</div>
+    									<div class="form-group">
+    										<label>密码</label>
+    										<input type="password" class="form-control" id="admin-reg-password">
+    									</div>
+    									<div class="form-group">
+    										<label>确认密码</label>
+    										<input type="password" class="form-control" id="admin-same-password">
+    									</div>
+    									<button type="button" class="btn btn-primary" id="admin-reg-btn">确认</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Javascripts -->
+        <%include pub/foot.html%>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+<div class="page-sidebar">
+    <a class="logo-box">
+        <span>后台管理</span>
+        <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
+        <i class="icon-close" id="sidebar-toggle-button-close"></i>
+    </a>
+    <div class="page-sidebar-inner">
+        <div class="page-sidebar-menu">
+            <ul class="accordion-menu">
+            	<%if(active == 'index'){%>
+				<li class="active-page">
+            	<%}else{%>
+				<li>
+            	<%}%>
+                    <a href="/admin/index">
+                        <i class="menu-icon icon-home4"></i><span>首页轮播图</span>
+                    </a>
+                </li>
+                <%if(active == 'tips' || active == 'suggest' || active == 'feedback'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon icon-inbox"></i><span>举报&反馈</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="/admin/suggest">用户见意</a></li>
+                        <li><a href="/admin/feedback">网站问题反馈</a></li>
+                        <li><a href="/admin/tips/comment/user">被举报评论-用户主页</a></li>
+                        <li><a href="/admin/tips/comment/work">被举报评论-作品详情</a></li>
+                        <li><a href="/admin/tips/comment/lesson">被举报评论-视频详情</a></li>
+                        <li><a href="/admin/tips/user">被举报用户</a></li>
+                        <li><a href="/admin/tips/work">被举报作品</a></li>
+                    </ul>
+                </li>
+
+                <%if(active == 'lesson'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="/admin/lesson">
+                        <i class="menu-icon icon-flash_on"></i><span>学习视频</span>
+                    </a>
+                </li>
+                <%if(active == 'alluser'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="/admin/users/1">
+                        <i class="menu-icon icon-format_list_bulleted"></i><span>用户列表</span>
+                    </a>
+                </li>
+                <%if(active == 'searchuser'){%>
+				<li class="active-page">
+            	<%}else{%>
+				<li>
+            	<%}%>
+                    <a href="/admin/searchuser">
+                        <i class="menu-icon icon-format_list_bulleted"></i><span>搜索用户</span>
+                    </a>
+                </li>
+                <%if(active == 'worksall'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="/admin/workslist/1">
+                        <i class="menu-icon icon-format_list_bulleted"></i><span>作品列表</span>
+                    </a>
+                </li>
+                <%if(active == 'works'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="/admin/works">
+                        <i class="menu-icon icon-format_list_bulleted"></i><span>作品搜索</span>
+                    </a>
+                </li>
+                <%if(active == 'register'){%>
+				<li class="active-page">
+            	<%}else{%>
+				<li>
+            	<%}%>
+                    <a href="/admin/register">
+                        <i class="menu-icon icon-layers"></i><span>后台账号设置</span>
+                    </a>
+                </li>
+                <%if(active == 'adminall'){%>
+                <li class="active-page">
+                <%}else{%>
+                <li>
+                <%}%>
+                    <a href="/admin/adminlist/1">
+                        <i class="menu-icon icon-format_list_bulleted"></i><span>管理员列表</span>
+                    </a>
+                </li>
+                <li class="menu-divider"></li>
+                <li>
+                    <a href="/admin/logout">
+                        <i class="menu-icon icon-my_location"></i><span>退出登录</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><!-- /Page Sidebar -->

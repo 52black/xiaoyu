@@ -1,0 +1,127 @@
+<%include pub/head.html%>
+</head>
+  <body class="bodybg">
+    <div class="xu-index-head bg2" style="overflow: visible">
+    	<div class="container">
+	    	<%include pub/nav.html%>
+	    </div>
+	</div>
+	<div class="xu-mian-panel">
+        <div class="container">
+        	<div class="person-center-panel">
+        		<h3 class="bar-title">用户信息</h3>
+        		<div class="person-center-bar paddingchange">
+        			<%if(locals.user){%>
+        			<div class="form-horizontal">
+        				<input type="hidden" name="_dise" id="koep" value="<%- locals.user._id %>" />
+        				<div class="form-group">
+					    	<label class="col-sm-3 control-label">头像</label>
+					    	<div class="col-sm-9">
+					      		<div id="wrapper" class="headimg-wrapper">       
+								  <input id="fileUpload" type="file" class="upload-headimg"/>
+								  <div class="loy-headimg">更换头像</div>
+								  <div id="image-holder" class="user-headimg-changer">
+								  	<img src="<%- locals.user.headimg %>">
+								  </div>
+								</div>
+								<p style="margin-top: 5px; color: #666;font-size: 13px;">最佳比例（200*200）</p>
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label"><span class="red">*</span> 昵称</label>
+					    	<div class="col-sm-9">
+					      		<input type="text" id="set_nickname" class="form-control" value="<%- locals.user.nickname %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">真实姓名</label>
+					    	<div class="col-sm-9">
+					      		<input type="text" id="set_realname" class="form-control" value="<%- locals.user.realname %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">常用电话</label>
+					    	<div class="col-sm-9">
+					      		<input type="text" id="set_phone" class="form-control" value="<%- locals.user.phoneNum %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">个性签名</label>
+					    	<div class="col-sm-9">
+					      		<textarea class="form-control" id="set_motto" rows="3" maxlength="80" placeholder="最多输入80个字"><%- locals.user.motto %></textarea>
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">QQ</label>
+					    	<div class="col-sm-9">
+					      		<input type="text" id="set_qq" class="form-control" value="<%- locals.user.qq %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">微信</label>
+					    	<div class="col-sm-9">
+					      		<input type="text" id="set_wx" class="form-control" value="<%- locals.user.wx %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="col-sm-3 control-label">常用邮箱</label>
+					    	<div class="col-sm-9">
+					      		<input type="email" id="set_email" class="form-control" value="<%- locals.user.wx %>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					  		<label class="col-sm-3 control-label"></label>
+					  		<div class="col-sm-9">
+					    		<button type="button" class="btn user-msg-btn" id="user-msg-btn">保 存</button>
+					    	</div>
+					  	</div>
+					</div>
+					
+					<%}else{%>
+					<div>请先<a href="javascript:;" style="color: #2d91e8" data-toggle="modal" data-target="#login">登录</a></div>
+					<%}%>
+        	</div>
+        	<%if(locals.user){%>
+        		<h3 class="bar-title">修改密码</h3>
+        		<div class="person-center-bar paddingchange">
+        			<div class="form-horizontal">
+						  	<div class="form-group">
+						    	<label class="col-sm-3 control-label"><span class="red">*</span> 旧密码</label>
+						    	<div class="col-sm-9">
+						      		<input type="password" id="old_password" class="form-control">
+						    	</div>
+						  	</div>
+						  	<div class="form-group">
+						    	<label class="col-sm-3 control-label"><span class="red">*</span> 新密码</label>
+						    	<div class="col-sm-9">
+						      		<input type="password" id="new_password" class="form-control">
+						    	</div>
+						  	</div>
+						  	<div class="form-group">
+						    	<label class="col-sm-3 control-label"><span class="red">*</span> 重复新密码</label>
+						    	<div class="col-sm-9">
+						      		<input type="password" id="same_password" class="form-control">
+						    	</div>
+						  	</div>
+						  	<div class="form-group">
+						  		<label class="col-sm-3 control-label"></label>
+						  		<div class="col-sm-9">
+						    		<button type="button" class="btn user-msg-btn" id="user-changepwd">保 存</button>
+						    	</div>
+						  	</div>
+							</div>
+        		</div>
+        	<%}%>
+        		<div class="person-center-bar">
+        			<p class="xutx_title">小U提醒:</p>
+        			<p class="xutx_content">维护社区秩序，遵守社区公约，不要随意发布有害信息，一经发现，永久封号。</p>
+        		</div>
+        	</div>
+        </div>
+    </div>
+
+    
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+  </body>
+</html>

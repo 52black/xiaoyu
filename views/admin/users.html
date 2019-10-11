@@ -1,0 +1,77 @@
+<%include pub/admin_head.html%>
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div class="page-container">
+            <%include pub/admin_nav.html%>
+            <!-- Page Content -->
+            <div class="page-content">
+            	<%include pub/admin_top.html%>
+                <div class="page-inner">
+                	<div class="page-title">
+                        <h3 class="breadcrumb-header">所有用户列表</h3>
+                        <input type="hidden" value="<%= pagecount%>" id="compagecount">
+                        <input type="hidden" value="<%= compageid%>" id="compageid">
+                    </div>
+                    <div id="main-wrapper">
+                        <div class="col-md-12">
+                            <table class="table" style="margin-top: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>用户ID</th>
+                                        <th>用户账号</th>
+                                        <th>昵称</th>
+                                        <th>注册时间</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%if(users){%>
+                                        <%for(let i=0; i< users.length;i++){%>
+                                        <tr>
+                                            <th scope="row"><%= i+1 %></th>
+                                            <td><%= users[i]._id %></td>
+                                            <td><%= users[i].username %></td>
+                                            <td><%= users[i].nickname %></td>
+                                            <td><%= users[i].time %></td>
+                                            <td>
+                                              <a href="/users/userindex/<%= users[i]._id %>"  target="_blank" class="btn btn-primary">个人主页</a>
+                                              <%if(users[i].status == 0){%>
+                                              <a href="javascript:;" class="btn btn-warning user_fenhao" uid="<%= users[i]._id %>">封号</a>
+                                              <%}else{%>
+                                              <a href="javascript:;" class="btn btn-success user_fenhao_jf" uid="<%= users[i]._id %>">解封</a>
+                                              <%}%>
+                                              <a href="javascript:;" class="btn btn-danger user_delete" uid="<%= users[i]._id %>">删除</a>
+                                            </td>
+                                        </tr>
+                                    <%}}%>
+                                </tbody>
+                            </table>
+                            <div id="work-pagination" class="pager row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%include pub/foot.html%>
+        <script type="text/javascript" src="/plugin/jqpaginator.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            var countnums = $('#compagecount').val();
+            var currentPage = parseInt($('#compageid').val());
+            if(countnums >  39){
+                var total = Math.ceil(countnums/40);
+                var prev = currentPage -1;
+                var next = currentPage +1;
+                $.jqPaginator('#work-pagination', {
+                    totalPages: total,
+                    visiblePages:5,
+                    currentPage:currentPage,
+                    page: '<li class="page"><a href="/admin/users/{{page}}">{{page}}</a></li>',
+                });
+            }
+        })
+        </script>
+    </body>
+</html>

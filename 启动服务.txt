@@ -1,0 +1,25 @@
+﻿先启动mongodb数据库  双击 D:\mongodb\bin mongod.exe
+
+然后，运存cmd命令行工具，cd到xiaous1根目录下，先运行 npm install 安装插件，完成之后，运行 node bin/www 启动服务。
+
+
+/*****文件解释******/
+
+app.js  bin/www 都是入口文件，用于设置端口和启动服务
+
+views下是html文件 public是静态文件
+
+schemas下是数据库设计文件，models是数据库模型
+
+routes 下是网站路由及API端口
+
+已发布到社区的作品的封面及.sb3文件在 public/released下
+未发布到社区的作品的封面及.sb3文件在 public/unreleased下
+
+‘public/js/lib.min.js + gui.js’ --- 创作页面的scratch
+
+‘public/js/lib.min.js’ 为scratch压缩文件，需要将其中localhost:3801修改为你自己的服务器ip或者域名网址，同样‘player/player.min.js’都需要修改ip
+‘public/static’ scratch静态图片文件
+
+‘public/admin’ 后台管理静态css及js文件
+‘public/js’ ‘public/css’ 前台静态css及js文件  

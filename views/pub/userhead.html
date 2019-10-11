@@ -1,0 +1,118 @@
+<div class="xu-index-head" >
+    <div class="head-bg1"></div>
+    <div class="container">
+        <div class="po-re"><div class="head-bg2"></div></div>
+        <%include nav.html%>
+        <% if(userinfo){ %>
+        <div class="usermsg-bar row">
+            <div class="user-head-img">
+                <img src="<%- userinfo.headimg %>" width="100%" height="100%"/>
+            </div>
+            <div class="user-content-bar">
+                <p class="user-name">
+                    <%- userinfo.nickname %>
+                    <%if(userinfo.status == 909){ %>
+                    <span class="user-gf-span">官方</span>
+                    <%}%>
+                    <%if(locals.user && userid && locals.user._id === userid){%>
+                    <a href="/users/usercenter" title="修改" class="chang_a_inname"><i class="icon iconfont icon-write"></i></a>
+                    <%}%>
+                </p>
+                <p class="user-create-time">加入于：<%- createtime %></p>
+                <p class="user-motto" title="<%- userinfo.motto %>">签名：<%- userinfo.motto %></p>
+            </div>
+            <% if(ufollow){ %>
+            <div class="user-content-bar">
+                
+                <div class="user-fans-bar">
+                    <% if(ufollow.folltotal !== 0){%>
+                    <a href="/users/userfollow/<%- userid %>"><span id="userfans"><%- ufollow.folltotal %></span> 关注</a>
+                    <%}else{%>
+                    <span id="userfans"><%- ufollow.folltotal %></span> 关注
+                    <%}%>
+                </div>
+                <div class="user-fans-bar"><span id="userfoller"><%- ufollow.fanstotal %></span> 粉丝</div>
+            </div>
+            <%}%>
+            <div class="user-o-controls">
+                <% if(locals.user){ let user_id = locals.user._id;%>
+                <input type="hidden" value="<%- userid %>" id="userid-page">
+                <input type="hidden" id="index_userid"  value="<%-userinfo._id%>">
+                <input type="hidden" id="index_myid"  value="<%-locals.user._id%>">
+                    <%
+                    if (uzan){
+                        let zanList = uzan.zanlist.toString();
+                        let _uzans = zanList.indexOf(user_id);
+                        let zan_total = uzan.total;
+                        if(zan_total>1000){
+                            zan_total = Math.floor(zan_total/1000)+'k'
+                        }
+                        
+                    %>
+                        <%if(_uzans !== -1){%>
+                        <button class="liked" id="liked-uzan" type="button"><i class="icon iconfont icon-icon"></i><span id="userzan"  uzan="<%- uzan.total %>"><%- zan_total%></span> <span id="zani">已赞</span></button>
+                        <%}else{%>
+                        <button id="liked-uzan" type="button"><i class="icon iconfont icon-icon"></i><span id="userzan" uzan="<%- uzan.total %>"><%- zan_total %></span> <span id="zani">赞</span></button>
+                        <%}%>
+
+                        
+                    <%}else{%>
+                    <button id="liked-uzan" type="button"><i class="icon iconfont icon-icon"></i><span id="userzan">0</span> <span id="zani">赞</span></button>
+                    <%}%>
+
+                    <%if(ufollow){
+                        let folList = ufollow.fanslist.toString();
+                        let _ufolls = folList.indexOf(user_id);
+                        let foll_total = ufollow.total;
+                    %>
+                        <%if(_ufolls !== -1){%>
+                        <button class="liked" type="button" id="liked-followed"><i class="icon iconfont icon-evaluate"></i><span id="folli">已关注</span></button>
+                        <%}else{%>
+                            <%if(locals.user && userid && locals.user._id !== userid){%>
+                            <button type="button" id="liked-followed"><i class="icon iconfont icon-evaluate"></i><span id="folli">+ 关注</span></button>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                <%}else{%>
+                    <%
+                    if (uzan){
+                    let zanList = uzan.zanlist;
+                    let zan_total = uzan.total
+                    if(zan_total>1000){
+                        zan_total = Math.floor(zan_total/1000)+'k'
+                    }
+                    %>
+                        <button type="button" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-icon"></i><span id="userzan" uzan="<%- uzan.total %>"><%- zan_total %></span> <span id="zani">赞</span></button>
+                    <%}else{%>
+                        <button type="button" data-toggle="modal" data-target="#login"><i class="icon iconfont icon-icon"></i><span id="userzan">0</span> <span id="zani">赞</span></button>
+                    <%}%>
+                    <button type="button" data-toggle="modal" data-target="#login" class="guanzhu-btn"><i class="icon iconfont icon-evaluate"></i>+ 关注</button>
+                <%}%>
+            </div>
+            <span class="usertip-btn" data-toggle="modal" data-target="#tipUser"><i class="icon iconfont icon-warnfill"></i> 举报</span>
+        </div>
+        <%}%>
+        <ul class="user-tab-bar" role="tablist">
+            <% if(useractive == 'index'){ %>
+                <li class="active"><a href="/users/userindex/<%- userid %>">发布的作品</a></li>
+            <%}else{%>
+                <li><a href="/users/userindex/<%- userid %>">发布的作品</a></li>
+            <%}%>
+            <% if(useractive == 'zanjob'){ %>
+                <li class="active"><a href="/users/userzan/<%- userid %>">赞过的作品</a></li>
+            <%}else{%>
+                <li><a href="/users/userzan/<%- userid %>">赞过的作品</a></li>
+            <%}%>
+            <% if(useractive == 'comment'){ %>
+                <li class="active"><a href="/users/usercomment/<%- userid %>">TA的留言板</a></li>
+            <%}else{%>
+                <li><a href="/users/usercomment/<%- userid %>">TA的留言板</a></li>
+            <%}%>
+            <% if(useractive == 'keep'){ %>
+                <li class="active"><a href="/users/userkeep/<%- userid %>">收藏夹</a></li>
+            <%}else{%>
+                <li><a href="/users/userkeep/<%- userid %>">收藏夹</a></li>
+            <%}%>
+        </ul>
+    </div>
+</div>

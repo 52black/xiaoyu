@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  	<meta charset="utf-8">
+	<title><%- title%></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="index">
+	<!-- Loading Bootstrap UI -->
+  <link rel='stylesheet' href='/css/scratch.css' />
+  </head>
+  <body>
+  	<%if(locals.user){%>
+  	<input type="hidden" id="scratch_user_id" value="<%- locals.user._id%>">
+  	<script type="text/javascript">
+  		var user_headimg = '<%- locals.user.headimg%>';
+  	</script>
+  	<%}else{%>
+  	<input type="hidden" id="scratch_user_id">
+  	<%}%>
+  	<script type="text/javascript">
+      var classify_list = "<%- classify_list.tags %>";
+      var classifyList = classify_list.split('/');
+      var _typeList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
+      var _tagsList = [];
+      for(var i = 1;i < classifyList.length; i++){
+          _tagsList.push({
+            "name":classifyList[i],
+            "active":false,
+            "ids":_typeList[i]
+          })
+      }
+  	<%if(worksdata.length > 0){%>
+  		var files_msg = <%- worksdata%>;
+  	<%}else{%>
+  		var files_msg = []
+  	<%}%>
+  	</script>
+      <script type="text/javascript" src="/scratches/creater/lib.min.js"></script>
+      <script type="text/javascript" src="/scratches/creater/gui.js"></script>
+    <%include pub/script.html%>
+	</body>
+</html>

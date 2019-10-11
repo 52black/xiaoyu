@@ -1,0 +1,55 @@
+<%include pub/head.html%>
+</head>
+  <body>
+    <%include pub/userhead.html%>
+	<div class="xu-mian-panel">
+        <div class="container">
+        	<!-- Tab panes -->
+			<div class="tab-content user-tab-content">
+                <%if(worksdata.length>0){%>
+                    <ul class="xu-card-bar row">
+                        <% for(let i=0; i < worksdata.length; i++){%>
+                        <li>
+                            <div class="xu-list-div">
+                                <a href="/works/content/1/<%- worksdata[i]._id%>" class="xu-content-img">
+                                    <img src="/released/covers/<%- worksdata[i].covers%>" alt="" />
+                                </a>
+                                <div class="xu-list-border">
+                                    <a href="/works/content/1/<%- worksdata[i]._id%>" class="xu-contant-title"><%- worksdata[i].title %></a>
+                                    <div class="xu-user-panel">
+                                        <%  let looknum = worksdata[i].looks;
+                                            let zannum = worksdata[i].zan;
+                                            if(looknum > 1000){
+                                                looknum = (looknum/1000).toFixed(1) +'k'
+                                            }
+                                            if(zannum > 1000){
+                                                zannum = (zannum/1000).toFixed(1) +'k'
+                                            }
+                                        %>
+                                        <ul class="user-eyes">
+                                            <li class="likes"><i class="icon iconfont icon-appreciate"></i> <%- zannum %></li>
+                                            <li class="eyes"><i class="icon iconfont icon-footprint"></i> <%- looknum %></li>
+                                        </ul>
+                                    </div>
+                                    <div class="xu-user-panel border-top">
+                                    <a href="/users/userindex/<%- worksdata[i].user._id %>" target="_blank">
+                                        <img src="<%- worksdata[i].user.headimg %>" class="xu-user-headimg" />
+                                        <span><%- worksdata[i].user.nickname %></span>
+                                    </a>
+                                </div>
+                                </div>
+                            </div>
+                        </li>
+                        <%}%>
+                    </ul>
+                <%}else{%>
+                    <p class="note-nowroks"><i class="icon iconfont icon-discoverfill"></i> 还没有收藏过作品哦</p>
+                <%}%>
+			</div>
+        </div>
+    </div>
+    <%include pub/foot.html%>
+    <%include pub/script.html%>
+    <script type="text/javascript" src="/plugin/jqpaginator.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<header>
+	<a href="/"><img src="/img/logo.png" width="150px" class="xu-logo"></a>
+	<nav class="head-nav-bar">
+		<a href="/">首页</a>
+		<a href="/scratch">Scratch3.0 创作</a>
+		<a href="/works">发现作品</a>
+		<a href="/lessons">在线学习</a>
+	</nav>
+	<% if(!locals.user){ %>
+	<ul class="head-login-nav ">
+		<li><a href="javascript:;" data-toggle="modal" data-target="#login" class="user-pa-btn">登录</a></li>
+		<li>/</li>
+		<li><a href="javascript:;" data-toggle="modal" data-target="#register" class="user-pa-btn">注册</a></li>
+	</ul>
+	<%}else{%>
+
+	<input type="hidden" id="local-userid" value="<%- locals.user._id %>" />
+	<div class="user-logined">
+		<div class="dropdown">
+	  	<a href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="user-nav-img row">
+	  		<div  class="user-head-icon"><img src="<%- locals.user.headimg %>" width="100%" height="100%"></div>
+	    	<span class="caret"></span>
+	    </a>
+		  <ul class="dropdown-menu pull-right userdrop" aria-labelledby="dLabel">
+		    <li class="color-1"><a href="/users/userworks/unreleased"><i class="icon iconfont icon-game"></i> 我的项目</a></li>
+		    <li class="color-2"><a href="/users/userindex/<%- locals.user._id %>"><i class="icon iconfont icon-discover"></i> 个人主页</a></li>
+		    <li class="color-3"><a href="/users/usercenter"><i class="icon iconfont icon-settings"></i> 账号设置</a></li>
+		    <li role="separator" class="divider"></li>
+		    <li class="color-4"><a href="/logout" ><i class="icon iconfont icon-exit"></i> 退出登录</a></li>
+		  </ul>
+		</div>
+	</div>
+		<%if(locals.user.noticenum == 0){%>
+		<a class="user-ts" href="/users/ts"><i class="icon iconfont icon-icon_notice"></i></a>
+		<%}else{%>
+		<a class="user-ts" href="/users/ts"><i class="icon iconfont icon-icon_notice"></i> <span class="tsnum"><%- locals.user.noticenum %></span></a>
+		<%}%>
+	<%}%>
+</header>
+<p style="display: none;">scratch3.0 scratch 开发 小幽编程 小幽卡搭</p>
