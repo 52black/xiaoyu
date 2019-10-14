@@ -17,7 +17,7 @@ var admin = require('./routes/admin_index');
 // h5
 var h5 = require('./routes/h5_index.js');
 // db
-const dbUrl = 'mongodb://localhost:27017/xiaous1'
+const dbUrl = 'mongodb://localhost:27017/xiaouopen'
 var mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
