@@ -18,17 +18,6 @@
   	<input type="hidden" id="scratch_user_id">
   	<%}%>
   	<script type="text/javascript">
-      var classify_list = "<%- classify_list.tags %>";
-      var classifyList = classify_list.split('/');
-      var _typeList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
-      var _tagsList = [];
-      for(var i = 1;i < classifyList.length; i++){
-          _tagsList.push({
-            "name":classifyList[i],
-            "active":false,
-            "ids":_typeList[i]
-          })
-      }
   	<%if(worksdata.length > 0){%>
   		var files_msg = <%- worksdata%>;
   	<%}else{%>

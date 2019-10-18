@@ -14,8 +14,6 @@ var scratch = require('./routes/scratch');
 var lessons = require('./routes/lessons');
 // admin
 var admin = require('./routes/admin_index');
-// h5
-var h5 = require('./routes/h5_index.js');
 // db
 const dbUrl = 'mongodb://localhost:27017/xiaouopen'
 var mongoose = require('mongoose');
@@ -57,7 +55,6 @@ app.use('/works', works);
 app.use('/scratch', scratch);
 app.use('/lessons', lessons);
 app.use('/admin', admin);
-app.use('/h5', h5);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
