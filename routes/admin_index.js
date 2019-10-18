@@ -9,13 +9,11 @@ const FeedBack = require('../models/feedback');
 const Notice = require('../models/notice');
 const Ucomment = require('../models/ucomment');
 const Wcomment = require('../models/wcomment');
-const Lcomment = require('../models/lcomment');
 const UCommentip = require('../models/tip_comment_u');
 const WCommentip = require('../models/tip_comment_w');
 const LCommentip = require('../models/tip_comment_l');
 const Worktip = require('../models/tip_work');
 const Usertip = require('../models/tip_user');
-const Lesson = require('../models/lesson');
 const Adminuser = require('../models/admin_user');
 const path = require('path');
 const fs = require('fs');
@@ -110,52 +108,8 @@ router.get('/searchuser', function(req, res, next) {
     res.redirect('/admin/login')
   }
 });
-// 视频列表
-router.get('/lesson', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    Lesson.find({}).exec(function(err, lessonlist){
-      if(err){console.log(err)}
-      res.render('admin/lesson', { 
-        lessons:lessonlist,
-        active:'lesson'
-      });
-    })
-  }else{
-    res.redirect('/admin/login')
-  }
-});
-// 上传新视频
-router.get('/lesson/upload/new', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    res.render('admin/lesson_upload', { 
-      lessons:[],
-      active:'lesson'
-    });
-  }else{
-    res.redirect('/admin/login')
-  }
-});
-//更新视频
-router.get('/lesson/upload/:id', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    let vid = req.params.id;
-    Lesson.find({_id:vid}).exec(function(err, backdata){
-      if(backdata && backdata.length > 0){
-        res.render('admin/lesson_upload', { 
-          lessons:backdata[0],
-          active:'lesson'
-        });
-      }else{
-        res.redirect('/admin/lesson')
-      }
-    })
-  }else{
-    res.redirect('/admin/login')
-  }
-});
+
+
 /* GET 所有用户. */
 router.get('/users/:page', function(req, res, next) {
   let _admin = req.session.admin;
@@ -291,21 +245,7 @@ router.get('/tips/comment/work', function(req, res, next) {
     res.redirect('/admin/login')
   }
 });
-// 举报视频详情-评论
-router.get('/tips/comment/lesson', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    LCommentip.find({}).sort({'meta.createAt': -1}).populate('toid','_id content').exec(function(err, tips){
-      res.render('admin/tips', { 
-        tips:tips,
-        qf:'lesson',
-        active:'tips'
-      });
-    })
-  }else{
-    res.redirect('/admin/login')
-  }
-});
+
 //作品管理
 router.get('/works', function(req, res, next) {
   let _admin = req.session.admin;
@@ -674,86 +614,7 @@ router.post('/jiefenhao/user',function(req, res, next) {
     })
   }
 });
-// 视频上传接口
-var videostorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/img/videocover'); 
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + guid())
-    }
-});
-// 创建 视频 multer 对象
-var videoupload = multer({ storage: videostorage });
-router.post('/lesson/video', videoupload.single('videocovers'),function(req, res, next) {
-  let file = req.file;
-  const covers = file.filename;
-  const _id = req.body.id;
-  const _oldcovers = req.body.oldcovers;
-  const title = req.body.title;
-  const abstract = req.body.abstract;
-  const knowsome = req.body.knowsome;
-  const learnsome = req.body.learnsome;
-  const src = req.body.src;
-  videofiles = {
-    title:title,
-    abstract:abstract,
-    knowsome:knowsome,
-    learnsome:learnsome,
-    covers:covers,
-    src:src
-  }
-  if(covers && title){
-    if(_id == 'new'){
-      let _videofiles = new Lesson(videofiles);
-      _videofiles.save(function(err){
-        if(err) console.log(err)
-        res.send({
-          status: 'success'
-        })
-      })
-    }else{
-      fs.unlink('./public/img/videocover/'+ _oldcovers, function (err) {
-        if (err){
-          console.log(err)
-        }
-      })
-      Lesson.updateVideo(_id, videofiles, function(err){
-        if(err){console.log(err)}
-        res.send({
-          status: 'success'
-        })
-      })
-    }
-  }else{
-    res.send({
-      status:'fail',
-      msg:'标题或封面不能为空'
-    })
-  }
-});
-// 轮播删除接口
-router.post('/lessons/delete',function(req, res, next) {
-  let lid = req.body.lid;
-  let _coversname = req.body.coversname;
-  if(lid && _coversname){
-    Lesson.remove({_id:lid}).exec(function(err){
-      if(err){console.log(err)}
-      res.send({
-        status: 'success'
-      })
-      fs.unlink('./public/img/videocover/'+ _coversname, function (err) {
-        if (err){
-          console.log(err)
-        }
-      })
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
+
 //修改密码
 router.post('/change/pwd',function(req, res, next) {
   const userhash = crypto.createHash('sha1');

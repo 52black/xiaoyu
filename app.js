@@ -11,7 +11,6 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var works = require('./routes/works');
 var scratch = require('./routes/scratch');
-var lessons = require('./routes/lessons');
 // admin
 var admin = require('./routes/admin_index');
 // db
@@ -53,7 +52,6 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/works', works);
 app.use('/scratch', scratch);
-app.use('/lessons', lessons);
 app.use('/admin', admin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

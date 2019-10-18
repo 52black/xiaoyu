@@ -10,8 +10,6 @@ npm-*
 /build
 /dist
 /.opt-in
-/public
-/public/static
 /public/unreleased
 /public/released
 /public/img/videocover

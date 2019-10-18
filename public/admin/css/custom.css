@@ -1,0 +1,34 @@
+/* Write your custom CSS here */
+.btn.btn-default{
+	border-color: #999;
+	color: #999
+}
+.cho-image{
+	position: relative;
+	background: #f9f9f9;
+	color: #333;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.banner-img-file{
+	position: absolute;
+	opacity: 0;
+	left:0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	z-index: 9;
+
+}
+.email .email-author span.email-date{
+	opacity: 1
+}
+.email-author{
+	overflow: hidden;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+	margin-top: 10px;
+}
