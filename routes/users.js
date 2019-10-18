@@ -3,7 +3,6 @@ const User = require('../models/user');
 const Ufollow = require('../models/ufollow');
 const Ucomment = require('../models/ucomment');
 const Wcomment = require('../models/wcomment');
-const Lcomment = require('../models/lcomment');
 const Uzan = require('../models/uzan');
 const Works = require('../models/works');
 const Unrel = require('../models/unreleased');
@@ -823,50 +822,6 @@ router.post('/delete/wcomment/s', function(req, res, next) {
   const tid = req.body.tid;
   if(cid && tid && types=='swcom'){
     Wcomment.deleteSById(cid,tid, function(err) {
-      if(err){
-        console.log(err)
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-//课程页评论删除
-router.post('/delete/lcomment/f', function(req, res, next) {
-  const cid = req.body.cid;
-  if(cid){
-    Lcomment.deleteFById(cid, function(err) {
-      if(err){
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-router.post('/delete/lcomment/s', function(req, res, next) {
-  const cid = req.body.cid;
-  const types = req.body.types;
-  const tid = req.body.tid;
-  if(cid && tid && types=='slcom'){
-    Lcomment.deleteSById(cid,tid, function(err) {
       if(err){
         console.log(err)
         res.send({

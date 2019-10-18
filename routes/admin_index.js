@@ -11,7 +11,6 @@ const Ucomment = require('../models/ucomment');
 const Wcomment = require('../models/wcomment');
 const UCommentip = require('../models/tip_comment_u');
 const WCommentip = require('../models/tip_comment_w');
-const LCommentip = require('../models/tip_comment_l');
 const Worktip = require('../models/tip_work');
 const Usertip = require('../models/tip_user');
 const Adminuser = require('../models/admin_user');
@@ -805,82 +804,6 @@ router.post('/delete/wcomment/s', function(req, res, next) {
         })
         WCommentip.removeById(tipid, function(err){
           if(err) console.log(err)
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-//课程页评论删除
-router.post('/delete/lcomment/f', function(req, res, next) {
-  const cid = req.body.cid;
-  const tipid = req.body.tipid;
-  if(cid){
-    Lcomment.deleteFById(cid, function(err) {
-      if(err){
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-        LCommentip.removeById(tipid, function(err){
-          if(err) console.log(err)
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-router.post('/delete/lcomment/s', function(req, res, next) {
-  const cid = req.body.cid;
-  const types = req.body.types;
-  const tid = req.body.tid;
-  const tipid = req.body.tipid;
-  if(cid && tid && types=='slcom'){
-    Lcomment.deleteSById(cid,tid, function(err) {
-      if(err){
-        console.log(err)
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-        LCommentip.removeById(tipid, function(err){
-          if(err) console.log(err)
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-
-
-// 处理举报作品
-router.post('/tips/work/done', function(req, res, next) {
-  const wid = req.body.wid;
-  if(wid){
-    Worktip.updateById(wid, function(err) {
-      if(err){
-        console.log(err)
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
         })
       }
     })
