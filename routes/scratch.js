@@ -2,7 +2,6 @@ const express = require('express');
 const User = require('../models/user');
 const Unrel = require('../models/unreleased');
 const Works = require('../models/works');
-const WorksClassify = require('../models/works_classify');
 const path = require('path');
 const fs = require('fs');
 const multer  = require('multer');
@@ -19,26 +18,22 @@ function guid() {
 /* GET scratch 3.0 page. */
 router.get('/', function(req, res, next) {
 	let _user = req.session.user;
-	WorksClassify.findOne({'ids':0}).exec(function(err, classify_list){
-  if(_user){
-    res.locals.user = _user;
-    let userId = res.locals.user._id;
-    Unrel.find({user: userId}).sort({'meta.updateAt':-1}).exec(function(err, worksdata){
-    		worksdata = JSON.stringify(worksdata)
-		    res.render('scratch', { 
-			    title: pagetitle,
-			    worksdata: worksdata,
-			    classify_list:classify_list
-		  	});
-	    })
-  }else{
-  	res.render('scratch', { 
-	    title: pagetitle,
-	    worksdata: '',
-	    classify_list:classify_list
-	  });
-  }
-  })
+	if(_user){
+	res.locals.user = _user;
+	let userId = res.locals.user._id;
+	Unrel.find({user: userId}).sort({'meta.updateAt':-1}).exec(function(err, worksdata){
+			worksdata = JSON.stringify(worksdata)
+			res.render('scratch', { 
+				title: pagetitle,
+				worksdata: worksdata
+				});
+		})
+	}else{
+		res.render('scratch', { 
+		title: pagetitle,
+		worksdata: ''
+		});
+	}
 });
 
 // 使用硬盘存储模式设置存放接收到的文件的路径以及文件名

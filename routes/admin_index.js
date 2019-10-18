@@ -14,7 +14,6 @@ const UCommentip = require('../models/tip_comment_u');
 const WCommentip = require('../models/tip_comment_w');
 const LCommentip = require('../models/tip_comment_l');
 const Worktip = require('../models/tip_work');
-const WorksClassify = require('../models/works_classify');
 const Usertip = require('../models/tip_user');
 const Lesson = require('../models/lesson');
 const Adminuser = require('../models/admin_user');
@@ -311,15 +310,9 @@ router.get('/tips/comment/lesson', function(req, res, next) {
 router.get('/works', function(req, res, next) {
   let _admin = req.session.admin;
   if(_admin){
-    WorksClassify.findOne({'ids':0}).exec(function(err, classify_list){
-      if(!classify_list){
-        classify_list = ''
-      };
-      res.render('admin/works', { 
-        active:'works',
-        classify:classify_list
-      });
-    })
+    res.render('admin/works', { 
+      active:'works'
+    });
   }else{
     res.redirect('/admin/login')
   }
@@ -1041,28 +1034,6 @@ router.post('/tips/user/done', function(req, res, next) {
   const wid = req.body.wid;
   if(wid){
     Usertip.updateById(wid, function(err) {
-      if(err){
-        console.log(err)
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-// 设置作品分类
-router.post('/works/classify', function(req, res, next) {
-  const classify = req.body.classify;
-  if(classify){
-    WorksClassify.updateByIds(classify,function(err) {
       if(err){
         console.log(err)
         res.send({
