@@ -18,6 +18,7 @@
   	<input type="hidden" id="scratch_user_id">
   	<%}%>
   	<script type="text/javascript">
+      var loginbtnVisible = document.getElementById('scratch_user_id').value;
   	<%if(worksdata.length > 0){%>
   		var files_msg = <%- worksdata%>;
   	<%}else{%>

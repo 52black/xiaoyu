@@ -112,12 +112,24 @@
 						</div>
 						<div class="w-cot-msg w-l-tags">
 							<h4 class="title">标签</h4>
-							<%let a='', b='', c='', d='', e='',f='',g='',h='',i='',j='',k='',l='',m='',n='';%>
-			                <%let classifyList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];for(let o = 0;o < classify.length; o++){%>
-			                    <%if(works.tags.indexOf(classifyList[o]) !== -1){%>
-			                        <a href="/works?page=1&type=<%= classifyList[o]%>&sort=zan" target="_blank"><%= classify[o]%></a>
-			                    <%}%>
-			                <%}%>
+							<%if(works.tags.indexOf('b') !== -1){%>
+							<a href="/works?page=1&type=b&sort=zan" target="_blank">游戏</a>
+							<%}%>
+							<%if(works.tags.indexOf('c') !== -1){%>
+							<a href="/works?page=1&type=c&sort=zan" target="_blank">动画</a>
+							<%}%>
+							<%if(works.tags.indexOf('d') !== -1){%>
+							<a href="/works?page=1&type=d&sort=zan" target="_blank">音乐</a>
+							<%}%>
+							<%if(works.tags.indexOf('e') !== -1){%>
+							<a href="/works?page=1&type=e&sort=zan" target="_blank">模拟</a>
+							<%}%>
+							<%if(works.tags.indexOf('f') !== -1){%>
+							<a href="/works?page=1&type=f&sort=zan" target="_blank">搞笑</a>
+							<%}%>
+							<%if(works.tags.indexOf('g') !== -1){%>
+							<a href="/works?page=1&type=g&sort=zan" target="_blank">故事</a>
+							<%}%>
 						</div>
 						<div class="do-this-job">
 							<%if(works && locals.user && works.user._id == locals.user._id){%>

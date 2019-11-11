@@ -136,47 +136,44 @@ router.get('/content/:page/:id', function(req, res, next) {
     if(_user){
       res.locals.user = _user
     }
-    WorksClassify.findOne({'ids':0}).exec(function(err, classify_list){
-      let classiftList = classify_list.tags.split('/');
-      Works.find({_id:worksid}).populate('user','_id headimg nickname').exec(function(err, worksdata){
-        if(worksdata && worksdata.length > 0){
-          Works.updateLooks(worksid, function(err){
-            if(err) console.log(err)
-          })
+    Works.find({_id:worksid}).populate('user','_id headimg nickname').exec(function(err, worksdata){
+      if(worksdata && worksdata.length > 0){
+        Works.updateLooks(worksid, function(err){
+          if(err) console.log(err)
+        })
 
-          Wcomment.findCount(worksid, function(err, pagecount){
-            if(err) console.log(err)
-            let _pagenum = (parseInt(pagenum)-1)*30;
-            if(_pagenum < 0 || _pagenum > pagecount){
-              _pagenum = 0
-            }
-            Wcomment.find({works: worksid}).sort({'meta.createAt':-1}).skip(_pagenum).limit(30).populate('fromid','headimg nickname').populate('reply.fromid reply.toid','headimg nickname').exec(function(err, wcomments){
-              if(wcomments.length > 0){
-                for(let i=0; i < wcomments.length; i++){
-                  let replylist = wcomments[i].reply;
-                  for(let ii =0; ii<replylist.length; ii++){
-                    replylist[ii].time = moment(replylist[ii].meta.createAt).startOf('minute').fromNow()
-                  }
-                  wcomments[i].time = moment(wcomments[i].meta.createAt).startOf('minute').fromNow()
+        Wcomment.findCount(worksid, function(err, pagecount){
+          if(err) console.log(err)
+          let _pagenum = (parseInt(pagenum)-1)*30;
+          if(_pagenum < 0 || _pagenum > pagecount){
+            _pagenum = 0
+          }
+          Wcomment.find({works: worksid}).sort({'meta.createAt':-1}).skip(_pagenum).limit(30).populate('fromid','headimg nickname').populate('reply.fromid reply.toid','headimg nickname').exec(function(err, wcomments){
+            if(wcomments.length > 0){
+              for(let i=0; i < wcomments.length; i++){
+                let replylist = wcomments[i].reply;
+                for(let ii =0; ii<replylist.length; ii++){
+                  replylist[ii].time = moment(replylist[ii].meta.createAt).startOf('minute').fromNow()
                 }
+                wcomments[i].time = moment(wcomments[i].meta.createAt).startOf('minute').fromNow()
               }
-              res.render('works_content', {
-                title: worksdata[0].title + pagetitle,
-                works: worksdata[0],
-                createtime: moment(worksdata[0].meta.createAt).format('L'),
-                updatetime: moment(worksdata[0].meta.updateAt).format('L'),
-                wcomments:wcomments,
-                pagecount:pagecount,
-                compageid:pagenum
-              });
-            })
+            }
+            res.render('works_content', {
+              title: worksdata[0].title + pagetitle,
+              works: worksdata[0],
+              createtime: moment(worksdata[0].meta.createAt).format('L'),
+              updatetime: moment(worksdata[0].meta.updateAt).format('L'),
+              wcomments:wcomments,
+              pagecount:pagecount,
+              compageid:pagenum
+            });
           })
+        })
 
-        }else{
-          res.render('error')
-        }
-      })
-    }) 
+      }else{
+        res.render('error')
+      }
+    })
   }else{
     res.redirect('/content/1/'+worksid)
   }
