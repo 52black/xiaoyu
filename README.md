@@ -7,7 +7,7 @@
 为保证收费版的源码安全，免费版部分源码加密处理。
 
 #### 软件安装说明
-https://www.scratchgui.com/open/doc
+https://www.scratchgui.com/open/doc。
 mongodb版本：mongodb-win32-x86_64-2008plus-ssl-4.0.4-signed；
 nodeJs版本：node-v10.13.0-x64
 
