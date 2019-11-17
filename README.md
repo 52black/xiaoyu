@@ -7,8 +7,8 @@
 
 #### 软件安装说明
 https://www.scratchgui.com/open/doc。
-mongodb版本：mongodb-win32-x86_64-2008plus-ssl-4.0.4-signed；
-nodeJs版本：node-v10.13.0-x64
+mongodb版本：> mongodb-win32-x86_64-2008plus-ssl-4.0.4-signed；
+nodeJs版本：> node-v10.13.0-x64
 
 #### 小幽官网
 https://www.scratchgui.com
