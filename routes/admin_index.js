@@ -9,10 +9,8 @@ const FeedBack = require('../models/feedback');
 const Notice = require('../models/notice');
 const Ucomment = require('../models/ucomment');
 const Wcomment = require('../models/wcomment');
-const Lcomment = require('../models/lcomment');
 const UCommentip = require('../models/tip_comment_u');
 const WCommentip = require('../models/tip_comment_w');
-const LCommentip = require('../models/tip_comment_l');
 const Worktip = require('../models/tip_work');
 const WorksClassify = require('../models/works_classify');
 const Usertip = require('../models/tip_user');
@@ -290,21 +288,7 @@ router.get('/tips/comment/work', function(req, res, next) {
     res.redirect('/admin/login')
   }
 });
-// 举报视频详情-评论
-router.get('/tips/comment/lesson', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    LCommentip.find({}).sort({'meta.createAt': -1}).populate('toid','_id content').exec(function(err, tips){
-      res.render('admin/tips', { 
-        tips:tips,
-        qf:'lesson',
-        active:'tips'
-      });
-    })
-  }else{
-    res.redirect('/admin/login')
-  }
-});
+
 //作品管理
 router.get('/works', function(req, res, next) {
   let _admin = req.session.admin;
@@ -958,58 +942,7 @@ router.post('/delete/wcomment/s', function(req, res, next) {
     })
   }
 });
-//课程页评论删除
-router.post('/delete/lcomment/f', function(req, res, next) {
-  const cid = req.body.cid;
-  const tipid = req.body.tipid;
-  if(cid){
-    Lcomment.deleteFById(cid, function(err) {
-      if(err){
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-        LCommentip.removeById(tipid, function(err){
-          if(err) console.log(err)
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
-router.post('/delete/lcomment/s', function(req, res, next) {
-  const cid = req.body.cid;
-  const types = req.body.types;
-  const tid = req.body.tid;
-  const tipid = req.body.tipid;
-  if(cid && tid && types=='slcom'){
-    Lcomment.deleteSById(cid,tid, function(err) {
-      if(err){
-        console.log(err)
-        res.send({
-          status:'fail'
-        })
-      }else{
-        res.send({
-          status:'success'
-        })
-        LCommentip.removeById(tipid, function(err){
-          if(err) console.log(err)
-        })
-      }
-    })
-  }else{
-    res.send({
-      status:'fail'
-    })
-  }
-});
+
 
 
 // 处理举报作品
