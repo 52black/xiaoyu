@@ -1,1 +1,1125 @@
-const express=require('express');const crypto=require('crypto');const multer=require('multer');const Banner=require('../models/banner');const Works=require('../models/works');const User=require('../models/user');const Suggest=require('../models/suggest');const FeedBack=require('../models/feedback');const Notice=require('../models/notice');const Ucomment=require('../models/ucomment');const Wcomment=require('../models/wcomment');const UCommentip=require('../models/tip_comment_u');const WCommentip=require('../models/tip_comment_w');const Worktip=require('../models/tip_work');const Usertip=require('../models/tip_user');const Adminuser=require('../models/admin_user');const path=require('path');const fs=require('fs');const router=express['Router']();const moment=require('moment');moment['locale']('zh-CN');router['get']('/index',function(_0x375021,_0x26752c,_0x3e7595){var _0x165a58={'RBGgD':'admin/index','xUMfO':'index','tEyEY':'/admin/login'};let _0x518abe=_0x375021['session']['admin'];if(_0x518abe){Works['find']({})['count']()['exec'](function(_0x2424f0,_0x23e845){var _0x594616={'DXsUo':_0x165a58['RBGgD'],'hUmuv':_0x165a58['xUMfO']};User['find']({})['count']()['exec'](function(_0x100c71,_0x5d4131){var _0x2ae02b={'jdltu':_0x594616['DXsUo'],'JHVaV':_0x594616['hUmuv']};Banner['find']({})['exec'](function(_0x198389,_0x25d413){if(_0x198389){console['log'](_0x198389);}_0x26752c['render'](_0x2ae02b['jdltu'],{'banners':_0x25d413,'usernum':_0x5d4131,'worknum':_0x23e845,'active':_0x2ae02b['JHVaV']});});});});}else{_0x26752c['redirect'](_0x165a58['tEyEY']);}});router['get']('/login',function(_0x3b442b,_0x11b514,_0xb4b123){var _0x38ae04={'DifdD':'admin/login'};_0x11b514['render'](_0x38ae04['DifdD']);});router['get']('/register',function(_0xe0a83a,_0x408612,_0x440dfa){var _0x2942c4={'xRDWa':'admin/register','ugfNr':'register','cBUlL':'/admin/login'};let _0x3485b4=_0xe0a83a['session']['admin'];if(_0x3485b4){_0x408612['locals']['admin']=_0x3485b4;}if(_0x3485b4){_0x408612['render'](_0x2942c4['xRDWa'],{'active':_0x2942c4['ugfNr']});}else{_0x408612['redirect'](_0x2942c4['cBUlL']);}});router['get']('/feedback',function(_0x34ec0d,_0xc589e5,_0x267dbf){var _0x267e79={'XkNhG':'admin/feedback','fcNwY':'feedback','Ofgsw':'user','XeEIi':'_id\x20nickname','Kktnh':'/admin/login'};let _0xce2541=_0x34ec0d['session']['admin'];if(_0xce2541){FeedBack['find']({})['sort']({'meta.createAt':-0x1})['populate'](_0x267e79['Ofgsw'],_0x267e79['XeEIi'])['exec'](function(_0x182a08,_0x1fd99b){if(_0x182a08){console['log'](_0x182a08);}_0xc589e5['render'](_0x267e79['XkNhG'],{'active':_0x267e79['fcNwY'],'feedback':_0x1fd99b});});}else{_0xc589e5['redirect'](_0x267e79['Kktnh']);}});router['get']('/suggest',function(_0x1bb003,_0x34566a,_0x2d3f60){var _0x592db2={'MBOfk':'admin/suggest','EljGi':'suggest','tXhpH':'user','ftpgO':'_id\x20nickname','nYSch':'/admin/login'};let _0x1a6291=_0x1bb003['session']['admin'];if(_0x1a6291){Suggest['find']({})['sort']({'meta.createAt':-0x1})['populate'](_0x592db2['tXhpH'],_0x592db2['ftpgO'])['exec'](function(_0x3a75a2,_0x80fced){if(_0x3a75a2){console['log'](_0x3a75a2);}_0x34566a['render'](_0x592db2['MBOfk'],{'active':_0x592db2['EljGi'],'suggest':_0x80fced});});}else{_0x34566a['redirect'](_0x592db2['nYSch']);}});router['get']('/searchuser',function(_0x4f2aa4,_0x5c4d6a,_0x185621){var _0x2bf661={'DDObM':'admin/search_user','GDnqo':'searchuser','mOqnM':'/admin/login'};let _0x487661=_0x4f2aa4['session']['admin'];if(_0x487661){_0x5c4d6a['render'](_0x2bf661['DDObM'],{'active':_0x2bf661['GDnqo']});}else{_0x5c4d6a['redirect'](_0x2bf661['mOqnM']);}});router['get']('/users/:page',function(_0x237a5c,_0x37a442,_0x534a6e){var _0x4041dd={'rzsPj':function(_0x388790,_0x30c84e){return _0x388790<_0x30c84e;},'BBawu':function(_0x4f7f22,_0x548144){return _0x4f7f22(_0x548144);},'tSuxs':'L\x20HH:mm','lnFJK':'admin/users','oSFVI':'users','xAqwH':function(_0x1157d9,_0x2d0cc9){return _0x1157d9*_0x2d0cc9;},'JKdtT':function(_0x37db00,_0x39eb96){return _0x37db00-_0x39eb96;},'DXlvN':function(_0x38f5ec,_0x54b536){return _0x38f5ec>_0x54b536;},'jzNSE':'/admin/login'};let _0x223790=_0x237a5c['session']['admin'];let _0x549859=_0x237a5c['params']['page'];if(!_0x549859){_0x549859=0x1;}_0x549859=_0x4041dd['BBawu'](parseInt,_0x549859);var _0x7faee8=/^[0-9]*$/;if(_0x223790&&_0x7faee8['test'](_0x549859)){User['countDocuments']({})['exec'](function(_0x3b01f1,_0x17fe5f){if(_0x3b01f1)console['log'](_0x3b01f1);let _0xd6255d=_0x4041dd['xAqwH'](_0x4041dd['JKdtT'](_0x4041dd['BBawu'](parseInt,_0x549859),0x1),0x28);if(_0x4041dd['rzsPj'](_0xd6255d,0x0)||_0x4041dd['DXlvN'](_0xd6255d,_0x17fe5f)){_0xd6255d=0x0;}User['find']({})['sort']({'meta.createAt':-0x1})['skip'](_0xd6255d)['limit'](0x28)['exec'](function(_0x4ddd8d,_0x274d4a){for(let _0x5e47d6=0x0;_0x4041dd['rzsPj'](_0x5e47d6,_0x274d4a['length']);_0x5e47d6++){_0x274d4a[_0x5e47d6]['time']=_0x4041dd['BBawu'](moment,_0x274d4a[_0x5e47d6]['meta']['createAt'])['format'](_0x4041dd['tSuxs']);}_0x37a442['render'](_0x4041dd['lnFJK'],{'users':_0x274d4a,'active':_0x4041dd['oSFVI'],'pagecount':_0x17fe5f,'compageid':_0x549859});});});}else{_0x37a442['redirect'](_0x4041dd['jzNSE']);}});router['get']('/addnotice',function(_0x233ae5,_0x598bf0,_0x40a0b7){var _0x595fb6={'UEDAx':'admin/addnotice','pfpgr':'addnotice','RcxoT':'/admin/login'};let _0x35fc9d=_0x233ae5['session']['admin'];if(_0x35fc9d){_0x598bf0['render'](_0x595fb6['UEDAx'],{'active':_0x595fb6['pfpgr']});}else{_0x598bf0['redirect'](_0x595fb6['RcxoT']);}});router['post']('/tuisong/add',function(_0x2ed99c,_0x5a1f6e,_0x2fa5db){var _0x4cc4f1={'TnuoP':'success','DjkDT':function(_0x377a83,_0x2416a2){return _0x377a83(_0x2416a2);},'FGOqm':function(_0x3ebbed,_0x5dde29){return _0x3ebbed&&_0x5dde29;},'FSNiF':'fail'};let _0x9edd44=_0x2ed99c['body']['user'];let _0x401a0d=_0x2ed99c['body']['title'];let _0x2abf93=_0x2ed99c['body']['content'];let _0x35b85b=[{'title':_0x401a0d,'content':_0x2abf93,'createAt':_0x4cc4f1['DjkDT'](moment,new Date())['format']('LL')}];if(_0x4cc4f1['FGOqm'](_0x9edd44,_0x2abf93)&&_0x401a0d){let _0x161f59=new Notice({'user':_0x9edd44,'message':_0x35b85b});_0x161f59['save'](function(_0x2b97fa){var _0x258f91={'ccHng':_0x4cc4f1['TnuoP']};if(_0x2b97fa){console['log'](_0x2b97fa);}User['updateAllnotice'](function(_0x5efbbf){if(_0x5efbbf){console['log'](_0x5efbbf);}_0x5a1f6e['send']({'status':_0x258f91['ccHng']});});});}else{_0x5a1f6e['send']({'status':_0x4cc4f1['FSNiF']});}});router['get']('/tips/work',function(_0x19cefc,_0x3ebb58,_0x1f67b8){var _0x2ab222={'ELTSR':'admin/tips_2','EJRux':'work','NWusM':'tips','Jxhre':'/admin/login'};let _0x4730ab=_0x19cefc['session']['admin'];if(_0x4730ab){Worktip['find']({})['sort']({'meta.createAt':-0x1})['exec'](function(_0x20464d,_0x19efcc){_0x3ebb58['render'](_0x2ab222['ELTSR'],{'tips':_0x19efcc,'qf':_0x2ab222['EJRux'],'active':_0x2ab222['NWusM']});});}else{_0x3ebb58['redirect'](_0x2ab222['Jxhre']);}});router['get']('/tips/user',function(_0x1e07fc,_0x375a17,_0x4b76e6){var _0x5bfd61={'OJJks':'admin/tips_2','dPDqZ':'user','NgnLe':'tips','CPYlI':'/admin/login'};let _0x588199=_0x1e07fc['session']['admin'];if(_0x588199){Usertip['find']({})['sort']({'meta.createAt':-0x1})['exec'](function(_0x5c34ba,_0x3693ac){_0x375a17['render'](_0x5bfd61['OJJks'],{'tips':_0x3693ac,'qf':_0x5bfd61['dPDqZ'],'active':_0x5bfd61['NgnLe']});});}else{_0x375a17['redirect'](_0x5bfd61['CPYlI']);}});router['get']('/tips/comment/user',function(_0x1ab470,_0x2cdb1e,_0x2014a6){var _0x570316={'bXKWF':'admin/tips','IRTJg':'user','FsoWe':'tips','HmWyk':'toid','YEzlG':'_id\x20content','bpiJr':'/admin/login'};let _0x455ae4=_0x1ab470['session']['admin'];if(_0x455ae4){UCommentip['find']({})['sort']({'meta.createAt':-0x1})['populate'](_0x570316['HmWyk'],_0x570316['YEzlG'])['exec'](function(_0x164455,_0x14c079){_0x2cdb1e['render'](_0x570316['bXKWF'],{'tips':_0x14c079,'qf':_0x570316['IRTJg'],'active':_0x570316['FsoWe']});});}else{_0x2cdb1e['redirect'](_0x570316['bpiJr']);}});router['get']('/tips/comment/work',function(_0x5a5d8a,_0x4d1686,_0x35d354){var _0x399591={'TrzgV':'admin/tips','EsKzU':'work','RVDZg':'tips','AnMbw':'toid','eWtXd':'_id\x20content','HvTgn':'/admin/login'};let _0x3cbcfb=_0x5a5d8a['session']['admin'];if(_0x3cbcfb){WCommentip['find']({})['sort']({'meta.createAt':-0x1})['populate'](_0x399591['AnMbw'],_0x399591['eWtXd'])['exec'](function(_0x306aef,_0x5a86af){_0x4d1686['render'](_0x399591['TrzgV'],{'tips':_0x5a86af,'qf':_0x399591['EsKzU'],'active':_0x399591['RVDZg']});});}else{_0x4d1686['redirect'](_0x399591['HvTgn']);}});router['get']('/works',function(_0x4a4966,_0x4e02b9,_0x2d2403){var _0xc00aad={'rQEha':'admin/works','gSLUn':'works','TZhmZ':'/admin/login'};let _0x1db36d=_0x4a4966['session']['admin'];if(_0x1db36d){_0x4e02b9['render'](_0xc00aad['rQEha'],{'active':_0xc00aad['gSLUn']});}else{_0x4e02b9['redirect'](_0xc00aad['TZhmZ']);}});router['get']('/workslist/:page',function(_0x3a4dac,_0x4014ba,_0x8cdd31){var _0x52433e={'fjOVE':function(_0x437d4e,_0x465965){return _0x437d4e<_0x465965;},'GDcjM':function(_0x3947d6,_0x32d806){return _0x3947d6(_0x32d806);},'bvter':'L\x20HH:mm','RYKol':'admin/works_list','eSJKP':'worksall','FlhVU':function(_0x3542eb,_0x47a022){return _0x3542eb*_0x47a022;},'OAmsH':function(_0x179fc8,_0x195207){return _0x179fc8-_0x195207;},'tJPeo':function(_0x1291bb,_0x18063b){return _0x1291bb>_0x18063b;},'KIQmz':'user','IbXZt':'nickname','rsEYu':function(_0x107f45,_0x38bc10){return _0x107f45(_0x38bc10);},'sFSma':'/admin/login'};let _0x4324c1=_0x3a4dac['session']['admin'];let _0x1c4830=_0x3a4dac['params']['page'];if(!_0x1c4830){_0x1c4830=0x1;}_0x1c4830=_0x52433e['rsEYu'](parseInt,_0x1c4830);var _0x132c12=/^[0-9]*$/;if(_0x4324c1&&_0x132c12['test'](_0x1c4830)){Works['countDocuments']({})['exec'](function(_0x200f20,_0x536cbf){if(_0x200f20)console['log'](_0x200f20);let _0x40aa05=_0x52433e['FlhVU'](_0x52433e['OAmsH'](_0x52433e['GDcjM'](parseInt,_0x1c4830),0x1),0x28);if(_0x52433e['fjOVE'](_0x40aa05,0x0)||_0x52433e['tJPeo'](_0x40aa05,_0x536cbf)){_0x40aa05=0x0;}Works['find']({})['sort']({'meta.createAt':-0x1})['skip'](_0x40aa05)['limit'](0x28)['populate'](_0x52433e['KIQmz'],_0x52433e['IbXZt'])['exec'](function(_0x3d4286,_0x1987b5){for(let _0x1082e1=0x0;_0x52433e['fjOVE'](_0x1082e1,_0x1987b5['length']);_0x1082e1++){_0x1987b5[_0x1082e1]['time']=_0x52433e['GDcjM'](moment,_0x1987b5[_0x1082e1]['meta']['createAt'])['format'](_0x52433e['bvter']);}_0x4014ba['render'](_0x52433e['RYKol'],{'data':_0x1987b5,'active':_0x52433e['eSJKP'],'pagecount':_0x536cbf,'compageid':_0x1c4830});});});}else{_0x4014ba['redirect'](_0x52433e['sFSma']);}});router['get']('/adminlist/:page',function(_0x5549b5,_0x32106c,_0x4d2cc2){var _0x3eec59={'BwtsB':function(_0xf31d94,_0x4fbcc0){return _0xf31d94<_0x4fbcc0;},'wkGOC':function(_0x86122a,_0x22de44){return _0x86122a(_0x22de44);},'vRyBT':'L\x20HH:mm','auLqR':'admin/admin_list','mFpFN':'adminall','LoZSn':function(_0x172c8b,_0x369814){return _0x172c8b*_0x369814;},'yMxPr':function(_0x52cae4,_0xe3acf8){return _0x52cae4-_0xe3acf8;},'phtEN':function(_0xb7eaf,_0x41f2ee){return _0xb7eaf(_0x41f2ee);},'fgBkp':function(_0x16258b,_0x7cb61d){return _0x16258b>_0x7cb61d;},'zKdcd':'/admin/login'};let _0x2fb0cd=_0x5549b5['session']['admin'];let _0x1349c2=_0x5549b5['params']['page'];if(!_0x1349c2){_0x1349c2=0x1;}_0x1349c2=_0x3eec59['phtEN'](parseInt,_0x1349c2);var _0x1ce763=/^[0-9]*$/;if(_0x2fb0cd&&_0x1ce763['test'](_0x1349c2)){Adminuser['countDocuments']({})['exec'](function(_0x1c9b53,_0x5b9402){if(_0x1c9b53)console['log'](_0x1c9b53);let _0xa48a3c=_0x3eec59['LoZSn'](_0x3eec59['yMxPr'](_0x3eec59['phtEN'](parseInt,_0x1349c2),0x1),0x28);if(_0x3eec59['BwtsB'](_0xa48a3c,0x0)||_0x3eec59['fgBkp'](_0xa48a3c,_0x5b9402)){_0xa48a3c=0x0;}Adminuser['find']({})['sort']({'meta.createAt':-0x1})['skip'](_0xa48a3c)['limit'](0x28)['exec'](function(_0x15e488,_0x2b8919){for(let _0x1d2a31=0x0;_0x3eec59['BwtsB'](_0x1d2a31,_0x2b8919['length']);_0x1d2a31++){_0x2b8919[_0x1d2a31]['time']=_0x3eec59['wkGOC'](moment,_0x2b8919[_0x1d2a31]['meta']['createAt'])['format'](_0x3eec59['vRyBT']);}_0x32106c['render'](_0x3eec59['auLqR'],{'data':_0x2b8919,'active':_0x3eec59['mFpFN'],'pagecount':_0x5b9402,'compageid':_0x1349c2});});});}else{_0x32106c['redirect'](_0x3eec59['zKdcd']);}});router['post']('/change/user/pwd',function(_0x47cee6,_0x27c4a0,_0x4bb9a4){var _0x2ea3e0={'cIURI':'success','ofmyf':'sha1','nycDo':'xiaou','rTlRZ':'111111','RhiCi':'hex','jQVWY':function(_0x383522,_0x3141a6){return _0x383522&&_0x3141a6;},'imQad':'fail'};let _0x5bbf9a=_0x47cee6['session']['admin'];const _0x48e02b=crypto['createHash'](_0x2ea3e0['ofmyf']);const _0x1af2ca=_0x48e02b['update'](_0x2ea3e0['nycDo'])['update'](_0x2ea3e0['rTlRZ'])['digest'](_0x2ea3e0['RhiCi']);const _0x243a7a=_0x47cee6['body']['uid'];if(_0x2ea3e0['jQVWY'](_0x5bbf9a,_0x243a7a)){User['updateOne']({'_id':_0x243a7a},{'$set':{'password':_0x1af2ca}})['exec'](function(_0x3935c8){_0x27c4a0['send']({'status':_0x2ea3e0['cIURI']});});}else{_0x27c4a0['send']({'status':_0x2ea3e0['imQad']});}});router['post']('/signin',function(_0x34f491,_0xf995f,_0x21d6bb){var _0x8a0053={'leBnW':'fail','RMCjQ':'服务器抢修中，暂时无法登陆','EDEel':function(_0x4712d1,_0x577d13){return _0x4712d1==_0x577d13;},'bmDzE':'nouser','jkTiN':'账号或密码错误','xQhFQ':function(_0x4be279,_0xde7fc3){return _0x4be279==_0xde7fc3;},'XzCsR':'success','cvtbf':'pwderror','krlXH':'sha1','RbgYO':function(_0x49dee7,_0x30397a){return _0x49dee7&&_0x30397a;},'LCNjI':'s1_admin','lDBfB':'hex'};const _0x31e098=crypto['createHash'](_0x8a0053['krlXH']);const _0x36fedb=_0x34f491['body']['username'];const _0x19686c=_0x34f491['body']['password'];if(_0x8a0053['RbgYO'](_0x36fedb,_0x19686c)){const _0x40e060=_0x31e098['update'](_0x8a0053['LCNjI'])['update'](_0x19686c)['digest'](_0x8a0053['lDBfB']);Adminuser['fetchByName'](_0x36fedb,function(_0x3315f2,_0x4af912){if(_0x3315f2){console['log'](_0x3315f2);_0xf995f['send']({'status':_0x8a0053['leBnW'],'msg':_0x8a0053['RMCjQ']});}else{if(_0x8a0053['EDEel'](_0x4af912['length'],0x0)){_0xf995f['send']({'status':_0x8a0053['bmDzE'],'msg':_0x8a0053['jkTiN']});}else{if(_0x8a0053['xQhFQ'](_0x40e060,_0x4af912[0x0]['password'])){_0x34f491['session']['admin']=_0x4af912[0x0];_0xf995f['send']({'status':_0x8a0053['XzCsR']});}else{_0xf995f['send']({'status':_0x8a0053['cvtbf'],'msg':_0x8a0053['jkTiN']});}}}});}});router['post']('/register',function(_0x1a98d4,_0x20543d,_0x1dddd8){var _0xd88210={'jhOmQ':'fail','IKkMA':'success','ZTQdQ':'服务器抢修中，暂时无法注册','SaXrv':function(_0x42c8ed,_0x133d49){return _0x42c8ed==_0x133d49;},'gkwHY':'该账号已被注册','XeoMq':'sha1','YDBEb':function(_0x3eee33,_0x4f652f){return _0x3eee33&&_0x4f652f;},'WlKje':'s1_admin','MOKMT':'hex'};const _0x46ff7c=crypto['createHash'](_0xd88210['XeoMq']);const _0x275f73=_0x1a98d4['body']['username'];const _0x47a971=_0x1a98d4['body']['userpwd'];let _0x23a6aa;if(_0xd88210['YDBEb'](_0x275f73,_0x47a971)){const _0x1fc67a=_0x46ff7c['update'](_0xd88210['WlKje'])['update'](_0x47a971)['digest'](_0xd88210['MOKMT']);Adminuser['fetchByName'](_0x275f73,function(_0x168c88,_0x5b2b01){if(_0x168c88){console['log'](_0x168c88);_0x20543d['send']({'status':_0xd88210['jhOmQ'],'msg':_0xd88210['ZTQdQ']});}else{if(_0xd88210['SaXrv'](_0x5b2b01['length'],0x0)){_0x23a6aa=new Adminuser({'username':_0x275f73,'password':_0x1fc67a});_0x23a6aa['save'](function(_0xf46092,_0x4c2343){if(_0xf46092){console['log'](_0xf46092);_0x20543d['send']({'status':_0xd88210['jhOmQ']});}else{_0x20543d['send']({'status':_0xd88210['IKkMA']});}});}else{_0x20543d['send']({'status':_0xd88210['jhOmQ'],'msg':_0xd88210['gkwHY']});}}});}});router['get']('/logout',function(_0x242523,_0x2bc3b0,_0x2fb7e2){var _0xf03b12={'TsZSW':'/admin/login'};delete _0x242523['session']['admin'];_0x2bc3b0['redirect'](_0xf03b12['TsZSW']);});var storage=multer['diskStorage']({'destination':function(_0x4ab700,_0x550bdd,_0x4263ef){var _0x1853a6={'anXZP':function(_0x2b9a5b,_0x1a582a,_0x13cf91){return _0x2b9a5b(_0x1a582a,_0x13cf91);},'FPTcI':'public/img/index/banner'};_0x1853a6['anXZP'](_0x4263ef,null,_0x1853a6['FPTcI']);},'filename':function(_0x3deca7,_0x18cd8a,_0x1c1f30){var _0x37557c={'PLLdC':function(_0x1fc878,_0x3ca1b5,_0x2b25d0){return _0x1fc878(_0x3ca1b5,_0x2b25d0);},'nMJqe':function(_0x11d354,_0x4f0255){return _0x11d354+_0x4f0255;},'KkMzK':function(_0xf1fddb){return _0xf1fddb();}};_0x37557c['PLLdC'](_0x1c1f30,null,_0x37557c['nMJqe'](_0x37557c['nMJqe'](_0x18cd8a['fieldname'],'-'),_0x37557c['KkMzK'](guid)));}});function guid(){var _0x49bcea={'LfAKm':function(_0x1100bb,_0x23de9a){return _0x1100bb|_0x23de9a;},'aYwkn':function(_0x552ecf,_0x547962){return _0x552ecf*_0x547962;},'QfdVS':function(_0x10d002,_0x4ed3e6){return _0x10d002+_0x4ed3e6;},'xOqIG':function(_0x1efcb1){return _0x1efcb1();}};function _0x2c373a(){return _0x49bcea['LfAKm'](_0x49bcea['aYwkn'](_0x49bcea['QfdVS'](0x1,Math['random']()),0x10000),0x0)['toString'](0x10)['substring'](0x1);}return _0x49bcea['QfdVS'](_0x49bcea['xOqIG'](_0x2c373a),_0x49bcea['xOqIG'](_0x2c373a));}var upload=multer({'storage':storage});router['post']('/banner/uploads',upload['single']('bannerimg'),function(_0x51c44b,_0x1af8d2,_0x550e94){var _0x24a40c={'TWrfe':'success','VmATJ':function(_0x443220,_0x28f228){return _0x443220&&_0x28f228;},'JWCzA':function(_0x2f0134,_0x1a560c){return _0x2f0134==_0x1a560c;},'FkwNx':'new','oRGNt':'fail'};let _0x1a4766=_0x51c44b['file'];const _0x46cd22=_0x1a4766['filename'];const _0x1e169a=_0x51c44b['body']['imgtitle'];const _0x2c56c0=_0x51c44b['body']['status'];const _0x398a9d=_0x51c44b['body']['bannerurl'];banner_msg={'title':_0x1e169a,'src':_0x46cd22,'url':_0x398a9d};if(_0x24a40c['VmATJ'](_0x1e169a,_0x46cd22)){if(_0x24a40c['JWCzA'](_0x2c56c0,_0x24a40c['FkwNx'])){let _0x503dfb=new Banner({'title':_0x1e169a,'src':_0x46cd22,'url':_0x398a9d});_0x503dfb['save'](function(_0x5dc805){if(_0x5dc805)console['log'](_0x5dc805);_0x1af8d2['send']({'status':_0x24a40c['TWrfe']});});}else{Banner['changeBanner'](_0x2c56c0,banner_msg,function(_0x5033d8,_0x122d5f){if(_0x5033d8){console['log'](_0x5033d8);}_0x1af8d2['send']({'status':_0x24a40c['TWrfe']});});}}else{_0x1af8d2['send']({'status':_0x24a40c['oRGNt']});}});router['post']('/banner/delete',function(_0x26449c,_0x2aab73,_0xafbd06){var _0x3af19b={'oEqem':'success','dlUdG':'fail'};let _0x1c0e58=_0x26449c['body']['imgid'];if(_0x1c0e58){Banner['remove']({'_id':_0x1c0e58})['exec'](function(_0x1f22d1){if(_0x1f22d1){console['log'](_0x1f22d1);}_0x2aab73['send']({'status':_0x3af19b['oEqem']});});}else{_0x2aab73['send']({'status':_0x3af19b['dlUdG']});}});router['post']('/search/user',function(_0x1024e7,_0x58269d,_0x5905ab){var _0x3c97ec={'aRoMJ':function(_0x568dbf,_0x2c67a2){return _0x568dbf==_0x2c67a2;},'ZrepE':'fail','JowkP':'success'};let _0x125eec=_0x1024e7['body']['username'];if(_0x125eec){User['find']({'nickname':_0x125eec})['exec'](function(_0x6b4344,_0x1bceb6){if(_0x6b4344){console['log'](_0x6b4344);}if(!_0x1bceb6||_0x3c97ec['aRoMJ'](_0x1bceb6['length'],0x0)){_0x58269d['send']({'status':_0x3c97ec['ZrepE']});}else{_0x58269d['send']({'status':_0x3c97ec['JowkP'],'userinfo':_0x1bceb6});}});}else{_0x58269d['send']({'status':_0x3c97ec['ZrepE']});}});router['post']('/tuisong/user',function(_0x5162e2,_0x3cbe9c,_0xdb982){var _0x58a9d7={'rTPCd':'success','JyGaC':function(_0x20c10e,_0x3e5f22){return _0x20c10e(_0x3e5f22);},'caLfX':function(_0x1c72f5,_0x3577ee){return _0x1c72f5&&_0x3577ee;},'ARyRm':'fail'};let _0x3533f7=_0x5162e2['body']['userid'];let _0x20f563=_0x5162e2['body']['title'];let _0x3a5afb=_0x5162e2['body']['content'];let _0x1095da={'title':_0x20f563,'content':_0x3a5afb,'createAt':_0x58a9d7['JyGaC'](moment,new Date())['format']('LL')};if(_0x58a9d7['caLfX'](_0x3533f7,_0x3a5afb)&&_0x20f563){Notice['updateNotice'](_0x3533f7,_0x1095da,function(_0x25c660){if(_0x25c660){console['log'](_0x25c660);}User['updateOnenotice'](_0x3533f7,function(_0x39111e){if(_0x39111e){console['log'](_0x39111e);}_0x3cbe9c['send']({'status':_0x58a9d7['rTPCd']});});});}else{_0x3cbe9c['send']({'status':_0x58a9d7['ARyRm']});}});router['post']('/tuisong/all',function(_0x4f963e,_0xa98f,_0x289894){var _0x247fa0={'DvqSJ':'success','maUGR':function(_0x3bad26,_0x250552){return _0x3bad26(_0x250552);},'KSrII':function(_0x151a42,_0x6d31d9){return _0x151a42&&_0x6d31d9;},'ZzxeK':'fail'};let _0x5c56a1=_0x4f963e['body']['title'];let _0x5c195d=_0x4f963e['body']['content'];let _0x17c24d={'title':_0x5c56a1,'content':_0x5c195d,'createAt':_0x247fa0['maUGR'](moment,new Date())['format']('LL')};if(_0x247fa0['KSrII'](_0x5c195d,_0x5c56a1)){Notice['tsAll'](_0x17c24d,function(_0xf40ed4){if(_0xf40ed4){console['log'](_0xf40ed4);}User['updateAllnotice'](function(_0x31f3fd){if(_0x31f3fd){console['log'](_0x31f3fd);}_0xa98f['send']({'status':_0x247fa0['DvqSJ']});});});}else{_0xa98f['send']({'status':_0x247fa0['ZzxeK']});}});router['post']('/fenhao/user',function(_0x3de400,_0x8f65ed,_0x3db3ac){var _0x2c6f45={'gUwAy':'success','ehWVB':'fail'};let _0x2a390a=_0x3de400['body']['userid'];if(_0x2a390a){User['update']({'_id':_0x2a390a},{'$set':{'status':-0x1}})['exec'](function(_0xda98e5){if(_0xda98e5){console['log'](_0xda98e5);}_0x8f65ed['send']({'status':_0x2c6f45['gUwAy']});});}else{_0x8f65ed['send']({'status':_0x2c6f45['ehWVB']});}});router['post']('/jiefenhao/user',function(_0x283c3f,_0x33c38a,_0x2801f7){var _0x1007a8={'DFteT':'success','ZTLrB':'fail'};let _0x30f7d4=_0x283c3f['body']['userid'];if(_0x30f7d4){User['update']({'_id':_0x30f7d4},{'$set':{'status':0x0}})['exec'](function(_0x1d69f5){if(_0x1d69f5){console['log'](_0x1d69f5);}_0x33c38a['send']({'status':_0x1007a8['DFteT']});});}else{_0x33c38a['send']({'status':_0x1007a8['ZTLrB']});}});router['post']('/change/pwd',function(_0xbb5717,_0xadeb0a,_0x5248f7){var _0x10da11={'DewzC':'success','wInPv':'fail','ElmTX':'服务器抢修中，暂时无法修改','tsVEu':function(_0x5d9d3c,_0x384094){return _0x5d9d3c==_0x384094;},'hEuYK':'sha1','XBySV':'s1_admin','AGPyt':'hex','wqpYc':'pwderror','BwJaR':'旧密码错误','qKBNz':function(_0x5bebed,_0x179fda){return _0x5bebed&&_0x179fda;}};const _0x5eca87=crypto['createHash'](_0x10da11['hEuYK']);let _0x52ea44=_0xbb5717['body']['userid'];let _0x1708ec=_0xbb5717['body']['oldpwd'];let _0x3474cb=_0xbb5717['body']['newpwd'];const _0x4073f7=_0x5eca87['update'](_0x10da11['XBySV'])['update'](_0x1708ec)['digest'](_0x10da11['AGPyt']);if(_0x10da11['qKBNz'](_0x52ea44,_0x1708ec)&&_0x3474cb){Adminuser['fetchById'](_0x52ea44,function(_0x5c72fe,_0x5a7db8){if(_0x5c72fe){console['log'](_0x5c72fe);_0xadeb0a['send']({'status':_0x10da11['wInPv'],'msg':_0x10da11['ElmTX']});}else{if(_0x10da11['tsVEu'](_0x4073f7,_0x5a7db8[0x0]['password'])){const _0x437252=crypto['createHash'](_0x10da11['hEuYK']);const _0x5824c7=_0x437252['update'](_0x10da11['XBySV'])['update'](_0x3474cb)['digest'](_0x10da11['AGPyt']);Adminuser['updateById'](_0x52ea44,_0x5824c7,function(_0x10cc0d,_0x4749ce){if(_0x10cc0d)console['log'](_0x10cc0d);_0xadeb0a['send']({'status':_0x10da11['DewzC']});});}else{_0xadeb0a['send']({'status':_0x10da11['wqpYc'],'msg':_0x10da11['BwJaR']});}}});}else{_0xadeb0a['send']({'status':_0x10da11['wInPv']});}});router['post']('/works/delete',function(_0x1ebb9c,_0x33491c,_0xc25d12){var _0x28bab1={'VSPIp':function(_0x250e7b,_0x1dd7e4){return _0x250e7b+_0x1dd7e4;},'sfTwI':'./public/released/scratch/','ZXJuv':'./public/released/covers/','MrtFT':'success','WsUTL':'fail'};let _0x429ff4=_0x1ebb9c['body']['wid'];if(_0x429ff4){Works['findOne']({'_id':_0x429ff4})['exec'](function(_0x213993,_0x711aa2){var _0x3e2360={'BwyOD':function(_0x144c82,_0x59ce47){return _0x28bab1['VSPIp'](_0x144c82,_0x59ce47);},'QkGAE':_0x28bab1['ZXJuv'],'LfiMv':_0x28bab1['MrtFT']};if(_0x711aa2){Works['remove']({'_id':_0x429ff4})['exec'](function(_0x352d39){if(_0x352d39){console['log'](_0x352d39);}fs['unlink'](_0x28bab1['VSPIp'](_0x28bab1['sfTwI'],_0x711aa2['worksid']),function(_0x47f197){if(_0x47f197){console['log'](_0x47f197);}fs['unlink'](_0x3e2360['BwyOD'](_0x3e2360['QkGAE'],_0x711aa2['covers']),function(_0x362e87){if(_0x362e87){console['log'](_0x362e87);}});_0x33491c['send']({'status':_0x3e2360['LfiMv']});});});}});}else{_0x33491c['send']({'status':_0x28bab1['WsUTL']});}});router['post']('/search/work',function(_0x50ce9f,_0x2ba537,_0x14c06f){var _0xc39889={'natut':function(_0x4e9599,_0x5cd80c){return _0x4e9599==_0x5cd80c;},'IPAqN':'fail','yOhNz':'作品不存在或已被删除','iQtCP':'success','KtWzu':'查询错误'};let _0x5dbfca=_0x50ce9f['body']['wname'];if(_0x5dbfca){Works['find']({'title':_0x5dbfca})['exec'](function(_0x306eff,_0x4f8f1d){if(_0x306eff){console['log'](_0x306eff);}if(!_0x4f8f1d||_0xc39889['natut'](_0x4f8f1d['length'],0x0)){_0x2ba537['send']({'status':_0xc39889['IPAqN'],'msg':_0xc39889['yOhNz']});}else{_0x2ba537['send']({'status':_0xc39889['iQtCP'],'works':_0x4f8f1d});}});}else{_0x2ba537['send']({'status':_0xc39889['IPAqN'],'msg':_0xc39889['KtWzu']});}});router['post']('/delete/ucomment/f',function(_0x437518,_0x20abd5,_0x31bb4b){var _0x58e20e={'kkKDq':'fail','vmhUA':'success'};const _0xa7bece=_0x437518['body']['cid'];const _0x1262a0=_0x437518['body']['tipid'];if(_0xa7bece){Ucomment['deleteFById'](_0xa7bece,function(_0x36702f){if(_0x36702f){_0x20abd5['send']({'status':_0x58e20e['kkKDq']});}else{_0x20abd5['send']({'status':_0x58e20e['vmhUA']});UCommentip['removeById'](_0x1262a0,function(_0x3aa6e7){if(_0x3aa6e7)console['log'](_0x3aa6e7);});}});}else{_0x20abd5['send']({'status':_0x58e20e['kkKDq']});}});router['post']('/delete/ucomment/s',function(_0x45fc3b,_0x577621,_0x507882){var _0x20ec1c={'oemQi':'fail','pqyKO':'success','TpJCF':function(_0xbb11d,_0x2aa596){return _0xbb11d&&_0x2aa596;},'whiUq':function(_0x47ebea,_0xde8a1b){return _0x47ebea==_0xde8a1b;},'gRDkP':'sucom'};const _0x2f06ab=_0x45fc3b['body']['cid'];const _0x2c5dee=_0x45fc3b['body']['types'];const _0x33e584=_0x45fc3b['body']['tid'];const _0x252660=_0x45fc3b['body']['tipid'];if(_0x20ec1c['TpJCF'](_0x2f06ab,_0x33e584)&&_0x20ec1c['whiUq'](_0x2c5dee,_0x20ec1c['gRDkP'])){Ucomment['deleteSById'](_0x2f06ab,_0x33e584,function(_0x104c0a){if(_0x104c0a){console['log'](_0x104c0a);_0x577621['send']({'status':_0x20ec1c['oemQi']});}else{_0x577621['send']({'status':_0x20ec1c['pqyKO']});UCommentip['removeById'](_0x252660,function(_0x30bfa3){if(_0x30bfa3)console['log'](_0x30bfa3);});}});}else{_0x577621['send']({'status':_0x20ec1c['oemQi']});}});router['post']('/delete/wcomment/f',function(_0x5bd7d3,_0x250289,_0x4f9e1d){var _0x5ed29d={'CkgJc':'fail','jgQwN':'success'};const _0x4cda43=_0x5bd7d3['body']['cid'];const _0x132000=_0x5bd7d3['body']['tipid'];if(_0x4cda43){Wcomment['deleteFById'](_0x4cda43,function(_0x16ddd1){if(_0x16ddd1){_0x250289['send']({'status':_0x5ed29d['CkgJc']});}else{_0x250289['send']({'status':_0x5ed29d['jgQwN']});WCommentip['removeById'](_0x132000,function(_0x35f78c){if(_0x35f78c)console['log'](_0x35f78c);});}});}else{_0x250289['send']({'status':_0x5ed29d['CkgJc']});}});router['post']('/delete/wcomment/s',function(_0x4742e6,_0x7d831a,_0x4bd44e){var _0x3260df={'LkHKR':'fail','sprLb':'success','crPKc':function(_0x5cf8d8,_0xf7ffb2){return _0x5cf8d8&&_0xf7ffb2;},'fRCLI':function(_0x26813e,_0xab1f9c){return _0x26813e==_0xab1f9c;},'PRXVG':'swcom'};const _0x3b2959=_0x4742e6['body']['cid'];const _0x49bdb0=_0x4742e6['body']['types'];const _0x476479=_0x4742e6['body']['tid'];const _0x2c8148=_0x4742e6['body']['tipid'];if(_0x3260df['crPKc'](_0x3b2959,_0x476479)&&_0x3260df['fRCLI'](_0x49bdb0,_0x3260df['PRXVG'])){Wcomment['deleteSById'](_0x3b2959,_0x476479,function(_0x5ce2cf){if(_0x5ce2cf){console['log'](_0x5ce2cf);_0x7d831a['send']({'status':_0x3260df['LkHKR']});}else{_0x7d831a['send']({'status':_0x3260df['sprLb']});WCommentip['removeById'](_0x2c8148,function(_0x4ec125){if(_0x4ec125)console['log'](_0x4ec125);});}});}else{_0x7d831a['send']({'status':_0x3260df['LkHKR']});}});router['post']('/tips/user/done',function(_0x508c7f,_0x558460,_0x89e0cf){var _0x4a678c={'qwcAD':'fail','DSfsJ':'success'};const _0x5634b0=_0x508c7f['body']['wid'];if(_0x5634b0){Usertip['updateById'](_0x5634b0,function(_0x5c4f6d){if(_0x5c4f6d){console['log'](_0x5c4f6d);_0x558460['send']({'status':_0x4a678c['qwcAD']});}else{_0x558460['send']({'status':_0x4a678c['DSfsJ']});}});}else{_0x558460['send']({'status':_0x4a678c['qwcAD']});}});router['post']('/delete/user',function(_0x2c74bf,_0x2bbe23,_0xd1c26){var _0x54dbf3={'BOVzJ':'fail','tcZQe':'success'};const _0x1e6e46=_0x2c74bf['body']['userid'];if(_0x1e6e46){User['deleteOne']({'_id':_0x1e6e46})['exec'](function(_0x5d4c85){if(_0x5d4c85){console['log'](_0x5d4c85);_0x2bbe23['send']({'status':_0x54dbf3['BOVzJ']});}else{_0x2bbe23['send']({'status':_0x54dbf3['tcZQe']});}});}else{_0x2bbe23['send']({'status':_0x54dbf3['BOVzJ']});}});router['post']('/delete/admin',function(_0x51eb46,_0x2bad1b,_0x72238b){var _0x5922af={'mCmkN':'fail','exibZ':'success'};const _0x281098=_0x51eb46['body']['aid'];if(_0x281098){Adminuser['deleteOne']({'_id':_0x281098})['exec'](function(_0x2a89e6){if(_0x2a89e6){console['log'](_0x2a89e6);_0x2bad1b['send']({'status':_0x5922af['mCmkN']});}else{_0x2bad1b['send']({'status':_0x5922af['exibZ']});}});}else{_0x2bad1b['send']({'status':_0x5922af['mCmkN']});}});module['exports']=router;
+const express = require('express');
+const crypto = require('crypto');
+const multer  = require('multer');
+const Banner = require('../models/banner');
+const Works = require('../models/works');
+const User = require('../models/user');
+const Suggest = require('../models/suggest');
+const FeedBack = require('../models/feedback');
+const Notice = require('../models/notice');
+const Ucomment = require('../models/ucomment');
+const Wcomment = require('../models/wcomment');
+const Lcomment = require('../models/lcomment');
+const UCommentip = require('../models/tip_comment_u');
+const WCommentip = require('../models/tip_comment_w');
+const LCommentip = require('../models/tip_comment_l');
+const Worktip = require('../models/tip_work');
+const WorksClassify = require('../models/works_classify');
+const Usertip = require('../models/tip_user');
+const Lesson = require('../models/lesson');
+const Adminuser = require('../models/admin_user');
+const path = require('path');
+const fs = require('fs');
+const router = express.Router();
+const moment = require('moment');
+moment.locale('zh-CN');
+
+/* GET 后台首页. */
+router.get('/index', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    Works.find({}).count().exec(function(err , worknum){
+      User.find({}).count().exec(function(err , usernum){
+        Banner.find({}).exec(function(err , index_msg){
+          if(err){console.log(err)}
+          res.render('admin/index', {
+            banners:index_msg,
+            usernum:usernum,
+            worknum:worknum,
+            active:'index'
+          });
+        })
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 登录
+router.get('/login', function(req, res, next) {
+  	res.render('admin/login');
+});
+// 开设新管理员账号
+router.get('/register', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    res.locals.admin = _admin
+  }
+  if(_admin){
+  	res.render('admin/register',{
+      active:'register'
+    });
+  }else{
+    res.redirect('/admin/login')
+  }
+  res.render('admin/register',{
+    active:'register'
+  });
+});
+
+// 问题反馈
+router.get('/feedback', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    FeedBack.find({}).sort({'meta.createAt': -1}).populate('user','_id nickname').exec(function(err, feedback){
+      if(err){console.log(err)}
+      res.render('admin/feedback',{
+        active:'feedback',
+        feedback:feedback
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 意见反馈
+router.get('/suggest', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    Suggest.find({}).sort({'meta.createAt': -1}).populate('user','_id nickname').exec(function(err, suggest){
+      if(err){console.log(err)}
+      res.render('admin/suggest',{
+        active:'suggest',
+        suggest:suggest
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+
+// 搜索用户
+router.get('/searchuser', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    res.render('admin/search_user',{
+      active:'searchuser'
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 视频列表
+router.get('/lesson', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    Lesson.find({}).exec(function(err, lessonlist){
+      if(err){console.log(err)}
+      res.render('admin/lesson', { 
+        lessons:lessonlist,
+        active:'lesson'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 上传新视频
+router.get('/lesson/upload/new', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    res.render('admin/lesson_upload', { 
+      lessons:[],
+      active:'lesson'
+    });
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+//更新视频
+router.get('/lesson/upload/:id', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    let vid = req.params.id;
+    Lesson.find({_id:vid}).exec(function(err, backdata){
+      if(backdata && backdata.length > 0){
+        res.render('admin/lesson_upload', { 
+          lessons:backdata[0],
+          active:'lesson'
+        });
+      }else{
+        res.redirect('/admin/lesson')
+      }
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+/* GET 所有用户. */
+router.get('/users/:page', function(req, res, next) {
+  let _admin = req.session.admin;
+  let pagenum = req.params.page;
+  if(!pagenum){
+    pagenum = 1
+  }
+  pagenum = parseInt(pagenum);
+  var reg = /^[0-9]*$/;
+  if(_admin && reg.test(pagenum)){
+    User.countDocuments({}).exec(function(err, pagecount){
+      if(err) console.log(err)
+      let _pagenum = (parseInt(pagenum)-1)*40;
+      if(_pagenum < 0 || _pagenum > pagecount){
+        _pagenum = 0
+      }
+      User.find({}).sort({'meta.createAt':-1}).skip(_pagenum).limit(40).exec(function(err, stualldata){
+        for(let i=0; i < stualldata.length; i++){
+          stualldata[i].time = moment(stualldata[i].meta.createAt).format('L HH:mm');
+        }
+        res.render('admin/users', { 
+          users: stualldata,
+          active:'users',
+          pagecount:pagecount,
+          compageid:pagenum
+        });
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+
+// 补旧用户的notice
+router.get('/addnotice', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    res.render('admin/addnotice', {
+      active:'addnotice'
+    });
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 补旧用户的notice
+router.post('/tuisong/add',function(req, res, next) {
+  let user = req.body.user;
+  let title = req.body.title;
+  let content = req.body.content;
+  let add_msg = [{
+    title:title,
+    content:content,
+    createAt:moment(new Date()).format('LL')
+  }]
+  if(user && content && title){
+    let _msg = new Notice({
+      user:user,
+      message:add_msg
+    });
+    _msg.save(function(err){
+      if(err){console.log(err)}
+      User.updateAllnotice(function(err){
+        if(err){console.log(err)}
+        res.send({
+          status: 'success',
+        })
+      })
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 被举报作品
+router.get('/tips/work', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    Worktip.find({}).sort({'meta.createAt': -1}).exec(function(err, tips){
+      res.render('admin/tips_2', { 
+        tips:tips,
+        qf:'work',
+        active:'tips'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 被举报用户
+router.get('/tips/user', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    Usertip.find({}).sort({'meta.createAt': -1}).exec(function(err, tips){
+      res.render('admin/tips_2', { 
+        tips:tips,
+        qf:'user',
+        active:'tips'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+
+// 举报用户主页-评论
+router.get('/tips/comment/user', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    UCommentip.find({}).sort({'meta.createAt': -1}).populate('toid','_id content').exec(function(err, tips){
+      res.render('admin/tips', { 
+        tips:tips,
+        qf:'user',
+        active:'tips'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 举报作品详情-评论
+router.get('/tips/comment/work', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    WCommentip.find({}).sort({'meta.createAt': -1}).populate('toid','_id content').exec(function(err, tips){
+      res.render('admin/tips', { 
+        tips:tips,
+        qf:'work',
+        active:'tips'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 举报视频详情-评论
+router.get('/tips/comment/lesson', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    LCommentip.find({}).sort({'meta.createAt': -1}).populate('toid','_id content').exec(function(err, tips){
+      res.render('admin/tips', { 
+        tips:tips,
+        qf:'lesson',
+        active:'tips'
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+//作品管理
+router.get('/works', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    WorksClassify.findOne({'ids':0}).exec(function(err, classify_list){
+      if(!classify_list){
+        classify_list = ''
+      };
+      res.render('admin/works', { 
+        active:'works',
+        classify:classify_list
+      });
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+//作品列表
+router.get('/workslist/:page', function(req, res, next) {
+  let _admin = req.session.admin;
+  let pagenum = req.params.page;
+  if(!pagenum){
+    pagenum = 1
+  }
+  pagenum = parseInt(pagenum);
+  var reg = /^[0-9]*$/;
+  if(_admin && reg.test(pagenum)){
+    Works.countDocuments({}).exec(function(err, pagecount){
+      if(err) console.log(err)
+      let _pagenum = (parseInt(pagenum)-1)*40;
+      if(_pagenum < 0 || _pagenum > pagecount){
+        _pagenum = 0
+      }
+      Works.find({}).sort({'meta.createAt':-1}).skip(_pagenum).limit(40).populate('user','nickname').exec(function(err, worksdata){
+        for(let i=0; i < worksdata.length; i++){
+          worksdata[i].time = moment(worksdata[i].meta.createAt).format('L HH:mm');
+        }
+        res.render('admin/works_list', { 
+          data: worksdata,
+          active:'worksall',
+          pagecount:pagecount,
+          compageid:pagenum
+        });
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+//管路员列表
+router.get('/adminlist/:page', function(req, res, next) {
+  let _admin = req.session.admin;
+  let pagenum = req.params.page;
+  if(!pagenum){
+    pagenum = 1
+  }
+  pagenum = parseInt(pagenum);
+  var reg = /^[0-9]*$/;
+  if(_admin && reg.test(pagenum)){
+    Adminuser.countDocuments({}).exec(function(err, pagecount){
+      if(err) console.log(err)
+      let _pagenum = (parseInt(pagenum)-1)*40;
+      if(_pagenum < 0 || _pagenum > pagecount){
+        _pagenum = 0
+      }
+      Adminuser.find({}).sort({'meta.createAt':-1}).skip(_pagenum).limit(40).exec(function(err, admindata){
+        for(let i=0; i < admindata.length; i++){
+          admindata[i].time = moment(admindata[i].meta.createAt).format('L HH:mm');
+        }
+        res.render('admin/admin_list', { 
+          data: admindata,
+          active:'adminall',
+          pagecount:pagecount,
+          compageid:pagenum
+        });
+      })
+    })
+  }else{
+    res.redirect('/admin/login')
+  }
+});
+// 以下是接口
+
+//重置用户密码
+router.post('/change/user/pwd', function(req, res, next) {
+  let _admin = req.session.admin;
+  const userhash = crypto.createHash('sha1');
+  const hash_pwd = userhash.update('xiaou').update('111111').digest('hex');
+  const uid = req.body.uid;
+  if(_admin && uid){
+    User.updateOne({_id:uid},{$set:{password:hash_pwd}}).exec(function(err){
+      res.send({
+        status: 'success'
+      })
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+/*  login 接口  */
+router.post('/signin', function(req, res, next) {
+  const userhash = crypto.createHash('sha1');
+  const user_name = req.body.username;
+  const user_pwd = req.body.password;
+  if(user_name && user_pwd){
+  	const hash_pwd = userhash.update('s1_admin').update(user_pwd).digest('hex');
+  	Adminuser.fetchByName(user_name, function(err,usermsg){
+	  	if(err){
+	    	console.log(err);
+	        res.send({
+	          status: 'fail',
+            msg:'服务器抢修中，暂时无法登陆'
+	        })
+	  	}else{
+        if(usermsg.length == 0){
+          res.send({
+            status:'nouser',
+            msg:'账号或密码错误'
+          })
+        }else{
+          if(hash_pwd == usermsg[0].password){
+              req.session.admin = usermsg[0];
+              res.send({
+                status:'success'
+              })
+          }else{
+            res.send({
+              status:'pwderror',
+              msg:'账号或密码错误',
+            })
+          }
+        }
+	  	}
+    });
+  }
+});
+/*  regsiter 接口 */
+router.post('/register', function(req, res, next) {
+  const userhash = crypto.createHash('sha1');
+  const user_name = req.body.username;
+  const user_pwd = req.body.userpwd;
+  let _usermsg;
+  if(user_name && user_pwd){
+  	const hash_pwd = userhash.update('s1_admin').update(user_pwd).digest('hex');
+    Adminuser.fetchByName(user_name, function(err, data){
+      if(err){
+        console.log(err);
+        res.send({
+          	status: 'fail',
+            msg:'服务器抢修中，暂时无法注册'
+        })
+      }else{
+        if(data.length == 0){
+          _usermsg = new Adminuser({
+           	username: user_name,
+           	password: hash_pwd
+          });
+          _usermsg.save(function(err,data){
+            if (err) {
+            	console.log(err);
+            	res.send({
+              		status: 'fail'
+            	})
+            }else{
+              res.send({
+              	status: 'success'
+              })
+            }
+          })
+        }else{
+        	res.send({
+	          	status: 'fail',
+	            msg:'该账号已被注册'
+        	})
+        }
+      }
+    })
+  }
+});
+// logout 接口
+router.get('/logout', function(req, res, next) {
+  delete req.session.admin;
+  res.redirect('/admin/login')
+});
+// 使用硬盘存储模式设置存放接收到的文件的路径以及文件名
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/img/index/banner'); 
+    },
+    filename: function (req, file, cb) {
+    	cb(null, file.fieldname + '-' + guid())
+    }
+});
+
+function guid() {
+    function S4() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
+    return (S4()+S4());
+}
+// 创建 multer 对象
+var upload = multer({ storage: storage });
+
+/* 轮播上传 接口 */
+router.post('/banner/uploads', upload.single('bannerimg'),function(req, res, next) {
+	let file = req.file;
+	const file_name = file.filename;
+	const file_title = req.body.imgtitle;
+	const status_id = req.body.status;
+	const urls = req.body.bannerurl;
+	banner_msg = {
+		title:file_title,
+		src:file_name,
+		url:urls
+	}
+	if(file_title && file_name){
+		if(status_id == 'new'){
+			let indexmsg = new Banner({
+				title:file_title,
+				src:file_name,
+				url:urls
+			})
+			indexmsg.save(function(err){
+				if(err) console.log(err)
+				res.send({
+			        status: 'success'
+			    })
+			})
+
+		}else{
+			Banner.changeBanner(status_id,banner_msg, function(err, back_msg){
+		      if(err){console.log(err)}
+		      res.send({
+		        status: 'success'
+		      })
+		    })
+		}
+		
+	}else{
+		res.send({
+			status:'fail'
+		})
+	}
+});
+// 轮播删除接口
+router.post('/banner/delete',function(req, res, next) {
+	let imgid = req.body.imgid;
+	
+	if(imgid){
+		Banner.remove({_id:imgid}).exec(function(err){
+	      if(err){console.log(err)}
+			res.send({
+				status: 'success'
+			})
+	    })
+
+	}else{
+		res.send({
+			status:'fail'
+		})
+	}
+});
+// 搜索用户接口
+router.post('/search/user',function(req, res, next) {
+  let username = req.body.username;
+  if(username){
+    User.find({nickname:username}).exec(function(err,userinfo){
+      if(err){console.log(err)}
+      if(!userinfo || userinfo.length == 0){
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status: 'success',
+          userinfo:userinfo
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 推送功能——给个人接口
+router.post('/tuisong/user',function(req, res, next) {
+  let userid = req.body.userid;
+  let title = req.body.title;
+  let content = req.body.content;
+  let zn_msg = {
+    title:title,
+    content:content,
+    createAt:moment(new Date()).format('LL')
+  }
+  if(userid && content && title){
+    Notice.updateNotice(userid,zn_msg,function(err){
+      if(err){console.log(err)}
+
+      User.updateOnenotice(userid,function(err){
+        if(err){console.log(err)}
+        res.send({
+          status: 'success',
+        })
+      })
+
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 推送功能——给所有用户 接口
+router.post('/tuisong/all',function(req, res, next) {
+  let title = req.body.title;
+  let content = req.body.content;
+  let ts_msg = {
+    title:title,
+    content:content,
+    createAt:moment(new Date()).format('LL')
+  }
+  if(content && title){
+    Notice.tsAll(ts_msg, function(err){
+      if(err){console.log(err)}
+
+      User.updateAllnotice(function(err){
+        if(err){console.log(err)}
+        res.send({
+          status: 'success',
+        })
+      })
+
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 封号接口
+router.post('/fenhao/user',function(req, res, next) {
+  let userid = req.body.userid;
+  if(userid){
+    User.update({_id:userid},{$set:{status:-1}}).exec(function(err){
+      if(err){console.log(err)}
+      res.send({
+        status: 'success'
+      })
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 解封号接口
+router.post('/jiefenhao/user',function(req, res, next) {
+  let userid = req.body.userid;
+  if(userid){
+    User.update({_id:userid},{$set:{status:0}}).exec(function(err){
+      if(err){console.log(err)}
+      res.send({
+        status: 'success'
+      })
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 视频上传接口
+var videostorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/img/videocover'); 
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + guid())
+    }
+});
+// 创建 视频 multer 对象
+var videoupload = multer({ storage: videostorage });
+router.post('/lesson/video', videoupload.single('videocovers'),function(req, res, next) {
+  let file = req.file;
+  const covers = file.filename;
+  const _id = req.body.id;
+  const _oldcovers = req.body.oldcovers;
+  const title = req.body.title;
+  const abstract = req.body.abstract;
+  const knowsome = req.body.knowsome;
+  const learnsome = req.body.learnsome;
+  const src = req.body.src;
+  videofiles = {
+    title:title,
+    abstract:abstract,
+    knowsome:knowsome,
+    learnsome:learnsome,
+    covers:covers,
+    src:src
+  }
+  if(covers && title){
+    if(_id == 'new'){
+      let _videofiles = new Lesson(videofiles);
+      _videofiles.save(function(err){
+        if(err) console.log(err)
+        res.send({
+          status: 'success'
+        })
+      })
+    }else{
+      fs.unlink('./public/img/videocover/'+ _oldcovers, function (err) {
+        if (err){
+          console.log(err)
+        }
+      })
+      Lesson.updateVideo(_id, videofiles, function(err){
+        if(err){console.log(err)}
+        res.send({
+          status: 'success'
+        })
+      })
+    }
+  }else{
+    res.send({
+      status:'fail',
+      msg:'标题或封面不能为空'
+    })
+  }
+});
+// 轮播删除接口
+router.post('/lessons/delete',function(req, res, next) {
+  let lid = req.body.lid;
+  let _coversname = req.body.coversname;
+  if(lid && _coversname){
+    Lesson.remove({_id:lid}).exec(function(err){
+      if(err){console.log(err)}
+      res.send({
+        status: 'success'
+      })
+      fs.unlink('./public/img/videocover/'+ _coversname, function (err) {
+        if (err){
+          console.log(err)
+        }
+      })
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//修改密码
+router.post('/change/pwd',function(req, res, next) {
+  const userhash = crypto.createHash('sha1');
+  let userid = req.body.userid;
+  let oldpwd = req.body.oldpwd;
+  let newpwd = req.body.newpwd;
+  const hash_pwd = userhash.update('s1_admin').update(oldpwd).digest('hex');
+  
+  if(userid && oldpwd && newpwd){
+    Adminuser.fetchById(userid, function(err,usermsg){
+      if(err){
+        console.log(err);
+          res.send({
+            status: 'fail',
+            msg:'服务器抢修中，暂时无法修改'
+          })
+      }else{
+        if(hash_pwd == usermsg[0].password){
+          const userhash2 = crypto.createHash('sha1');
+          const new_hash_pwd = userhash2.update('s1_admin').update(newpwd).digest('hex');
+          Adminuser.updateById(userid, new_hash_pwd, function(err,usermsg){
+            if(err) console.log(err)
+            res.send({
+              status:'success'
+            })
+          })
+        }else{
+          res.send({
+            status:'pwderror',
+            msg:'旧密码错误',
+          })
+        }
+      }
+    });
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//作品删除接口
+router.post('/works/delete',function(req, res, next) {
+  let wid = req.body.wid;
+  if(wid){
+    Works.findOne({_id:wid}).exec(function(err, work_msg){
+      if(work_msg){
+        Works.remove({_id:wid}).exec(function(err){
+          if(err){console.log(err)}
+          fs.unlink('./public/released/scratch/'+ work_msg.worksid, function (err) {
+            if (err){console.log(err)}
+            fs.unlink('./public/released/covers/'+ work_msg.covers, function (err) {
+              if (err){
+                console.log(err)
+              }
+            })
+            res.send({
+              status: 'success'
+            })
+          })
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//作品查询
+router.post('/search/work',function(req, res, next) {
+  let wname = req.body.wname;
+  if(wname){
+    Works.find({title:wname}).exec(function(err,works){
+      if(err){console.log(err)}
+      if(!works || works.length == 0){
+        res.send({
+          status: 'fail',
+          msg:'作品不存在或已被删除'
+        })
+      }else{
+        res.send({
+          status: 'success',
+          works:works
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail',
+       msg:'查询错误'
+    })
+  }
+});
+
+
+//删除用户评论
+router.post('/delete/ucomment/f', function(req, res, next) {
+  const cid = req.body.cid;
+  const tipid = req.body.tipid;
+  if(cid){
+    Ucomment.deleteFById(cid, function(err) {
+      if(err){
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        UCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+router.post('/delete/ucomment/s', function(req, res, next) {
+  const cid = req.body.cid;
+  const types = req.body.types;
+  const tid = req.body.tid;
+  const tipid = req.body.tipid;
+  if(cid && tid && types=='sucom'){
+    Ucomment.deleteSById(cid,tid, function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        UCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//作品页评论删除
+router.post('/delete/wcomment/f', function(req, res, next) {
+  const cid = req.body.cid;
+  const tipid = req.body.tipid;
+  if(cid){
+    Wcomment.deleteFById(cid, function(err) {
+      if(err){
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        WCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+router.post('/delete/wcomment/s', function(req, res, next) {
+  const cid = req.body.cid;
+  const types = req.body.types;
+  const tid = req.body.tid;
+  const tipid = req.body.tipid;
+  if(cid && tid && types=='swcom'){
+    Wcomment.deleteSById(cid,tid, function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        WCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//课程页评论删除
+router.post('/delete/lcomment/f', function(req, res, next) {
+  const cid = req.body.cid;
+  const tipid = req.body.tipid;
+  if(cid){
+    Lcomment.deleteFById(cid, function(err) {
+      if(err){
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        LCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+router.post('/delete/lcomment/s', function(req, res, next) {
+  const cid = req.body.cid;
+  const types = req.body.types;
+  const tid = req.body.tid;
+  const tipid = req.body.tipid;
+  if(cid && tid && types=='slcom'){
+    Lcomment.deleteSById(cid,tid, function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+        LCommentip.removeById(tipid, function(err){
+          if(err) console.log(err)
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+
+
+// 处理举报作品
+router.post('/tips/work/done', function(req, res, next) {
+  const wid = req.body.wid;
+  if(wid){
+    Worktip.updateById(wid, function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 处理举报用户
+router.post('/tips/user/done', function(req, res, next) {
+  const wid = req.body.wid;
+  if(wid){
+    Usertip.updateById(wid, function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+// 设置作品分类
+router.post('/works/classify', function(req, res, next) {
+  const classify = req.body.classify;
+  if(classify){
+    WorksClassify.updateByIds(classify,function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//删除用户账号
+router.post('/delete/user', function(req, res, next) {
+  const userid = req.body.userid;
+  if(userid){
+    User.deleteOne({_id:userid}).exec(function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+//删除管理员账号
+router.post('/delete/admin', function(req, res, next) {
+  const adminid = req.body.aid;
+  if(adminid){
+    Adminuser.deleteOne({_id:adminid}).exec(function(err) {
+      if(err){
+        console.log(err)
+        res.send({
+          status:'fail'
+        })
+      }else{
+        res.send({
+          status:'success'
+        })
+      }
+    })
+  }else{
+    res.send({
+      status:'fail'
+    })
+  }
+});
+module.exports = router;
