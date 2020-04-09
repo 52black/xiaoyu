@@ -135,7 +135,7 @@
 							<%if(works && locals.user && works.user._id == locals.user._id){%>
 							<a href="/scratch#<%- works.worksid %>" class="check-job">查看积木</a>
 							<%}else{%>
-								<%if(works.isOnly !== true){%>
+								<%if(works.isOnly != true){%>
 								<a href="/scratch#<%- works.worksid %>" class="check-job">查看积木</a>
 								<%}else{%>
 								<a class="check-job only">查看积木</a>

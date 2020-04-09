@@ -147,7 +147,13 @@ router.post('/files/released', released_file,function(req, res, next) {
 	const fileabstract = req.body.fileabstract
 	const fileexplain = req.body.fileexplain;
 	const tags = req.body.tags;
-	const fileonly = Boolean(req.body.fileonly);
+	let fileonly = req.body.fileonly;
+	if(fileonly == 'false'){
+		fileonly = false;
+	}else{
+		fileonly = true
+	};
+	console.log(fileonly)
 	const localsid = req.body.localsid;
 	const covers = files.covers[0].filename;
 	const oldwid = req.body.oldwid;
