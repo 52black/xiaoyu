@@ -19,6 +19,27 @@ const fs = require('fs');
 const router = express.Router();
 const moment = require('moment');
 moment.locale('zh-CN');
+// 登录
+router.get('/login', function(req, res, next) {
+    res.render('admin/login');
+});
+// 开设新管理员账号
+router.get('/register', function(req, res, next) {
+  let _admin = req.session.admin;
+  if(_admin){
+    res.locals.admin = _admin
+  }
+  if(_admin){
+    res.render('admin/register',{
+      active:'register'
+    });
+  }else{
+    res.redirect('/admin/login')
+  }
+  res.render('admin/register',{
+    active:'register'
+  });
+});
 
 /* GET 后台首页. */
 router.get('/index', function(req, res, next) {
@@ -40,27 +61,6 @@ router.get('/index', function(req, res, next) {
   }else{
     res.redirect('/admin/login')
   }
-});
-// 登录
-router.get('/login', function(req, res, next) {
-  	res.render('admin/login');
-});
-// 开设新管理员账号
-router.get('/register', function(req, res, next) {
-  let _admin = req.session.admin;
-  if(_admin){
-    res.locals.admin = _admin
-  }
-  if(_admin){
-  	res.render('admin/register',{
-      active:'register'
-    });
-  }else{
-    res.redirect('/admin/login')
-  }
-  res.render('admin/register',{
-    active:'register'
-  });
 });
 
 // 问题反馈
