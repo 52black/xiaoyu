@@ -28,17 +28,15 @@ router.get('/register', function(req, res, next) {
   let _admin = req.session.admin;
   if(_admin){
     res.locals.admin = _admin
-  }
-  if(_admin){
     res.render('admin/register',{
       active:'register'
     });
   }else{
     res.redirect('/admin/login')
   }
-  res.render('admin/register',{
-    active:'register'
-  });
+  // res.render('admin/register',{
+  //   active:'register'
+  // });
 });
 
 /* GET 后台首页. */
