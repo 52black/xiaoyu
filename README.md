@@ -1,4 +1,5 @@
 ## 注：该源码全部来源https://gitee.com/xiaoyaqian/xiaou-open/tree/master/ 放在这只是为了在自己的网站上使用jsdelivr的cdn调用以起到节省流量的作用
+## 下载安装请前往原链接进行，该仓库有删除文件
 ## 以下为原readme文件
 # xiaou-open
 
